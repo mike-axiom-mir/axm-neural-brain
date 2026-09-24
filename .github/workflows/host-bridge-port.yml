@@ -1,0 +1,24 @@
+name: Host bridge port
+
+on:
+  push:
+    branches:
+      - codex/host-experience-bridge-v1
+  pull_request:
+    paths:
+      - "integration/**"
+      - ".github/workflows/host-bridge-port.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  port-contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run port contract tests
+        run: python -m unittest discover -s integration/tests -v
