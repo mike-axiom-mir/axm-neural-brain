@@ -1,7 +1,11 @@
 import copy
 import unittest
 
-from integration.host_bridge_port import BoundBrainHostPort, _sha256_json
+from integration.host_bridge_port import (
+    BoundBrainHostPort,
+    EXPECTED_ROOT_CONTRACT_REF,
+    _sha256_json,
+)
 
 UC_BRAIN_IO = {
     "schema": "axm-brain-io/v0.1",
@@ -16,7 +20,7 @@ UC_BRAIN_IO = {
 }
 
 BRIDGE = {
-    "schema": "axm-host-brain-bridge/v1",
+    "schema": "axm-host-brain-bridge/v1.1",
     "name": "axm.uc.host-experience-reference/v1",
     "brain_io": UC_BRAIN_IO,
     "brain_io_sha256": "dfe07368b941bb8ac4eaa635f7a50ca652d01a43db90d91c24ef2c0751105fa1",
@@ -28,14 +32,9 @@ BRIDGE = {
         "observations": "host",
         "execution": "host",
     },
-    "roots": [
-        "truth",
-        "agency-non-domination",
-        "continuity",
-        "wisdom-before-speed",
-    ],
+    "root_contract": EXPECTED_ROOT_CONTRACT_REF,
 }
-BRIDGE_SHA = "9f15737c495921540906da9ab9394002de4a8b5db1d271b5dab0742b3f24656a"
+BRIDGE_SHA = "13a554927a73d582056bef04680442e390294a2c788824af70f23ff26be0fd87"
 
 
 class FakeContract:
@@ -65,6 +64,12 @@ class FakeBoundBrain:
 class BrainPortTests(unittest.TestCase):
     def test_pinned_contract_hash_is_exact(self):
         self.assertEqual(_sha256_json(BRIDGE), BRIDGE_SHA)
+
+    def test_canonical_root_reference_is_exact(self):
+        self.assertEqual(
+            EXPECTED_ROOT_CONTRACT_REF["contract_sha256"],
+            "7d1eaeb05ce9353bccb5783a045ce9be91bf327c17bd93b47fdb68fd6bc46ed2",
+        )
 
     def test_accepts_exact_contract_and_returns_advisory_output(self):
         brain = FakeBoundBrain()
@@ -111,6 +116,12 @@ class BrainPortTests(unittest.TestCase):
     def test_authority_rewrite_invalidates_contract(self):
         changed = copy.deepcopy(BRIDGE)
         changed["authority"]["execution"] = "neural"
+        with self.assertRaises(ValueError):
+            BoundBrainHostPort(FakeBoundBrain(), changed, BRIDGE_SHA)
+
+    def test_root_contract_rewrite_invalidates_contract(self):
+        changed = copy.deepcopy(BRIDGE)
+        changed["root_contract"]["contract_sha256"] = "0" * 64
         with self.assertRaises(ValueError):
             BoundBrainHostPort(FakeBoundBrain(), changed, BRIDGE_SHA)
 

@@ -6,16 +6,17 @@ import json
 import math
 from typing import Mapping
 
-BRIDGE_SCHEMA = "axm-host-brain-bridge/v1"
+BRIDGE_SCHEMA = "axm-host-brain-bridge/v1.1"
 EXPERIENCE_SCHEMA = "axm-host-experience/v1"
 ACTION_SCHEMA = "axm-host-action-proposal/v1"
 
-EXPECTED_ROOTS = (
-    "truth",
-    "agency-non-domination",
-    "continuity",
-    "wisdom-before-speed",
-)
+EXPECTED_ROOT_CONTRACT_REF = {
+    "schema": "axm-root-contract-ref/v1",
+    "owner_repo": "mike-axiom-mir/axm-neural-brain",
+    "owner_commit": "a0f5de4b19bf515e145caf50b12130ab740869b5",
+    "contract_schema": "axm-roots/v0.1",
+    "contract_sha256": "7d1eaeb05ce9353bccb5783a045ce9be91bf327c17bd93b47fdb68fd6bc46ed2",
+}
 
 EXPECTED_AUTHORITY = {
     "permissions": "host",
@@ -53,8 +54,8 @@ class BoundBrainHostPort:
             raise ValueError("unsupported bridge schema")
         if body.get("authority") != EXPECTED_AUTHORITY:
             raise ValueError("bridge authority boundary mismatch")
-        if tuple(body.get("roots", ())) != EXPECTED_ROOTS:
-            raise ValueError("AXM root boundary mismatch")
+        if body.get("root_contract") != EXPECTED_ROOT_CONTRACT_REF:
+            raise ValueError("AXM root contract boundary mismatch")
         if _sha256_json(body) != contract_sha256:
             raise ValueError("bridge contract fingerprint mismatch")
 
