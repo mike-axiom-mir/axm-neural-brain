@@ -6,6 +6,7 @@ from axm_persistence.core import (
     AXM_ROOTS,
     BirthValidation,
     ContinuityDecision,
+    CheckpointReceipt,
     GenesisRecord,
     IntegrityError,
     LineageError,
@@ -213,6 +214,67 @@ class PersistenceLineageTests(unittest.TestCase):
         self.assertEqual(journal.events[1]["record_id"], transition.record_id)
         self.assertEqual(journal.events[2]["record_id"], receipt.record_id)
 
+    def test_checkpoint_receipt_is_append_only_and_keeps_active_state(self):
+        g0 = genesis()
+        journal = LineageJournal(g0)
+        receipt = CheckpointReceipt.create(
+            lineage=g0.lineage,
+            previous_event_id=journal.last_event_id,
+            state_id=journal.active_state_id,
+            state_snapshot=journal.active_snapshot,
+            durable_ref="host-checkpoint:fixture-001",
+            restore_verification_sha256=journal.active_snapshot["sha256"],
+            evidence_refs=("restore:fixture-001",),
+        )
+        before_state = journal.active_state_id
+        journal.append_checkpoint(receipt)
+        self.assertEqual(journal.active_state_id, before_state)
+        self.assertEqual(journal.last_event_id, receipt.record_id)
+        restored = LineageJournal.from_snapshot(
+            json.loads(json.dumps(journal.to_snapshot()))
+        )
+        self.assertEqual(restored.to_snapshot(), journal.to_snapshot())
+        self.assertEqual(restored.active_state_id, before_state)
+
+    def test_checkpoint_receipt_rejects_false_restore_hash(self):
+        g0 = genesis()
+        with self.assertRaises(LineageError):
+            CheckpointReceipt.create(
+                lineage=g0.lineage,
+                previous_event_id=g0.record_id,
+                state_id=g0.record_id,
+                state_snapshot=g0.snapshot,
+                durable_ref="host-checkpoint:bad",
+                restore_verification_sha256="0" * 64,
+            )
+
+    def test_checkpoint_for_non_active_state_is_rejected(self):
+        g0 = genesis()
+        journal = LineageJournal(g0)
+        transition = TransitionRecord.create(
+            lineage=g0.lineage,
+            previous_event_id=journal.last_event_id,
+            parent_state_id=journal.active_state_id,
+            parent_snapshot=journal.active_snapshot,
+            next_snapshot=snap(step=1, value=2),
+            continuity=(
+                ContinuityDecision("anchor", "PRESERVE", "PASS", "retained"),
+            ),
+            root_review=roots_pass(),
+            reason="advance active state",
+        )
+        journal.append_transition(transition)
+        stale = CheckpointReceipt.create(
+            lineage=g0.lineage,
+            previous_event_id=journal.last_event_id,
+            state_id=g0.record_id,
+            state_snapshot=g0.snapshot,
+            durable_ref="host-checkpoint:stale",
+            restore_verification_sha256=g0.snapshot["sha256"],
+        )
+        with self.assertRaises(LineageError):
+            journal.append_checkpoint(stale)
+
     def test_wrong_restore_receipt_is_rejected(self):
         g0 = genesis()
         with self.assertRaises(LineageError):
@@ -263,6 +325,7 @@ def _rehash_record(record):
         "axm.genesis-admission/v1": "g0",
         "axm.lineage-transition/v1": "s",
         "axm.rollback-receipt/v1": "rb",
+        "axm.checkpoint-receipt/v1": "cp",
     }[body["schema"]]
     return {
         **body,
@@ -452,6 +515,21 @@ class SemanticRehashTamperTests(unittest.TestCase):
         transition = _rehash_record(transition)
         with self.assertRaises(IntegrityError):
             TransitionRecord.from_dict(transition)
+
+    def test_rehashed_checkpoint_cannot_change_host_authority_rule(self):
+        g0 = genesis()
+        receipt = CheckpointReceipt.create(
+            lineage=g0.lineage,
+            previous_event_id=g0.record_id,
+            state_id=g0.record_id,
+            state_snapshot=g0.snapshot,
+            durable_ref="host-checkpoint:fixture",
+            restore_verification_sha256=g0.snapshot["sha256"],
+        ).to_dict()
+        receipt["authority_rule"] = "lineage owns storage"
+        receipt = _rehash_record(receipt)
+        with self.assertRaises(IntegrityError):
+            CheckpointReceipt.from_dict(receipt)
 
     def test_rehashed_rollback_cannot_change_append_only_rule(self):
         g0 = genesis()
