@@ -1,0 +1,24 @@
+{
+  "schema": "axm-direct-brain-seed/v0.1",
+  "profile": "direct-learning-default",
+  "birth": {
+    "trained_weights_imported": false,
+    "learned_state_imported": false,
+    "deterministic_seed_required": true
+  },
+  "runtime": {
+    "default_phase": "wake",
+    "online_learning": true,
+    "persistent_state": true,
+    "bounded_replay": true,
+    "sleep_consolidation": true
+  },
+  "authority": {
+    "network": false,
+    "shell": false,
+    "tools": false,
+    "host_filesystem": false,
+    "host_software_control": false
+  },
+  "notes": "The host software owns permissions and translates software events into numeric observations and feedback."
+}
