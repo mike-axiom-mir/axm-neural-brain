@@ -33,7 +33,7 @@ The integration contract is deliberately narrow: Neural Core supplies a complete
 7. **Branch provenance** — a new lineage may point to a parent lineage/state and must record why it forked.
 8. **Restart equivalence** — serializing and restoring a journal must reconstruct the same active state and the same hashed event history.
 9. **Nested integrity** — re-hashing an outer journal cannot hide a changed previously admitted event; each event verifies its own digest.
-10. **No authority expansion** — this layer has no network, shell or autonomous filesystem authority. The host chooses where bytes are stored and when an admitted state is activated.
+10. **No authority expansion** — this layer has no network, shell or autonomous filesystem authority. The host chooses where bytes are stored and when an admitted state is activated.\n11. **Checkpoint receipts bind evidence, not storage authority** — a checkpoint receipt may be appended only for the current active state after restore verification. It binds the exact snapshot hash to an opaque host-owned durable reference without writing files itself.
 
 ## Schemas
 
@@ -60,3 +60,24 @@ The rollback receipt is appended after S2. S2 remains in history. A later S3 may
 Hash equality proves byte-level canonical equivalence under the declared schema. It does not prove that the neural behavior is useful, intelligent or semantically equivalent outside the tested restore/continuity probes.
 
 Required Notice: Copyright 2026 Mike - Axiom/Mir.
+
+
+## Cross-repository donor integration
+
+This checkpoint-receipt layer deliberately reuses already-tested AXM patterns instead of
+inventing a new recovery vocabulary:
+
+- **AXM State Research** checkpoint validation: bind schema + exact state/provenance hashes,
+  quarantine mismatches, and require verified-source recovery rather than trusting a changed
+  envelope.
+- **AXM Protocol Evolution** receipt semantics: strict canonical JSON, explicit schema identity,
+  digest-chain continuity, and the truth boundary that a self-digest proves binding/integrity,
+  not authorship or semantic truth.
+- **AXM Collaboration Platform** append/history modules: forward-only event succession,
+  exact revision/history checks, pairwise rollback/fork classification, bounded canonical data,
+  and host-owned persistence rather than hidden network authority.
+- **AXM Invariant Lab / Stateborn transport**: replay barriers are earned only by accepted state;
+  rejected or corrupt attempts must not become durable barriers.
+
+Exact repository commits, source paths and Git blob SHAs are retained in
+`provenance/cross-repo-neural-pattern-donors-v0.1.json`.
