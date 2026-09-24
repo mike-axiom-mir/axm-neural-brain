@@ -1,0 +1,9 @@
+{
+  "schema": "axm-neural-core-donor-provenance/v0.1",
+  "donor_repository": "mike-axiom-mir/axm-uc-neural",
+  "donor_pull_request": 3,
+  "donor_branch": "codex/axm-direct-brain-v0.1",
+  "donor_commit": "163410ce05a42879dca478d8ea0de7f6d17c4820",
+  "scope": "neural-core-only",
+  "truth_boundary": "parameter change alone is not evidence of useful learning"
+}
