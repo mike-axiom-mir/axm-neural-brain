@@ -243,5 +243,232 @@ class PersistenceLineageTests(unittest.TestCase):
         self.assertEqual(child.to_dict()["branch_from"]["state_id"], parent.record_id)
 
 
+from axm_persistence.core import AXM_ROOT_CONTRACT_SHA256, sha256_value
+from axm_persistence.neural_adapter import (
+    admit_brain_genesis,
+    birth_validation_from_snapshot,
+    capture_brain,
+    restore_brain,
+    verify_brain_restore_equivalence,
+)
+from neural.axm_brain import AXMBrain, AXM_ROOT_CONTRACT, BrainConfig, Experience
+
+
+def _rehash_record(record):
+    body = copy.deepcopy(record)
+    body.pop("record_sha256", None)
+    body.pop("record_id", None)
+    digest = sha256_value(body)
+    prefix = {
+        "axm.genesis-admission/v1": "g0",
+        "axm.lineage-transition/v1": "s",
+        "axm.rollback-receipt/v1": "rb",
+    }[body["schema"]]
+    return {
+        **body,
+        "record_sha256": digest,
+        "record_id": f"{prefix}:{body['lineage']}:{digest}",
+    }
+
+
+class NeuralCorePersistenceIntegrationTests(unittest.TestCase):
+    def brain(self, seed=71):
+        return AXMBrain(
+            BrainConfig(
+                input_size=2,
+                hidden_size=4,
+                output_size=1,
+                seed=seed,
+                replay_capacity=8,
+            )
+        )
+
+    def brain_genesis(self):
+        return admit_brain_genesis(
+            self.brain(),
+            lineage="adapter-fixture",
+            provenance={
+                "source_repo": "mike-axiom-mir/axm-neural-brain",
+                "core_head": "a0f5de4b19bf515e145caf50b12130ab740869b5",
+                "donor_repo": "mike-axiom-mir/axm-uc-neural",
+                "donor_pr": 3,
+                "donor_head": "163410ce05a42879dca478d8ea0de7f6d17c4820",
+            },
+            admitting_authority="fixture-admission",
+            commit_evidence="fixture:durable-commit",
+            identities_roles={"system": "AXM Neural Brain"},
+            platform_assumptions={"runtime": "python-3.11"},
+        )
+
+    def test_core_and_persistence_share_exact_root_fingerprint(self):
+        self.assertEqual(
+            AXM_ROOT_CONTRACT_SHA256,
+            AXM_ROOT_CONTRACT.fingerprint,
+        )
+
+    def test_real_neural_birth_can_be_admitted_and_restored(self):
+        record = self.brain_genesis()
+        record.verify()
+        self.assertTrue(record.record_id.startswith("g0:adapter-fixture:"))
+        restored = restore_brain(record.snapshot)
+        self.assertEqual(restored.to_snapshot(), self.brain().to_snapshot())
+
+    def test_experienced_brain_is_not_g0(self):
+        brain = self.brain()
+        brain.experience(
+            Experience([0.2, -0.3], target=[0.4], directions=("LEARN",))
+        )
+        self.assertFalse(
+            birth_validation_from_snapshot(brain.to_snapshot()).passed
+        )
+        with self.assertRaises(LineageError):
+            admit_brain_genesis(
+                brain,
+                lineage="experienced",
+                provenance={"source": "fixture"},
+                admitting_authority="fixture",
+                commit_evidence="fixture:commit",
+            )
+
+    def test_slept_brain_is_not_g0(self):
+        brain = self.brain()
+        brain.sleep()
+        self.assertFalse(
+            birth_validation_from_snapshot(brain.to_snapshot()).passed
+        )
+
+    def test_learned_state_survives_json_restart_exactly(self):
+        brain = self.brain()
+        for _ in range(4):
+            brain.experience(
+                Experience(
+                    [0.8, -0.4],
+                    target=[0.65],
+                    reward=0.5,
+                    directions=("USE", "LEARN"),
+                )
+            )
+        brain.sleep()
+        wrapped = capture_brain(brain)
+        serialized = json.loads(json.dumps(wrapped))
+        self.assertEqual(
+            verify_brain_restore_equivalence(serialized),
+            wrapped,
+        )
+        self.assertEqual(
+            restore_brain(serialized).to_snapshot(),
+            brain.to_snapshot(),
+        )
+
+    def test_nested_native_tamper_is_rejected_after_outer_rehash(self):
+        wrapped = capture_brain(self.brain())
+        body = copy.deepcopy(wrapped["body"])
+        body["native_snapshot"]["body"]["state"]["steps"] = 999
+        forged_outer = make_snapshot(wrapped["state_schema"], body)
+        with self.assertRaises(Exception):
+            restore_brain(forged_outer)
+
+    def test_real_brain_snapshots_form_transition_record(self):
+        brain = self.brain()
+        g0 = self.brain_genesis()
+        parent = g0.snapshot
+        brain.experience(
+            Experience([0.3, 0.1], target=[0.2], directions=("LEARN",))
+        )
+        candidate = capture_brain(brain)
+        transition = TransitionRecord.create(
+            lineage=g0.lineage,
+            previous_event_id=g0.record_id,
+            parent_state_id=g0.record_id,
+            parent_snapshot=parent,
+            next_snapshot=candidate,
+            continuity=(
+                ContinuityDecision(
+                    "fixture-behavior",
+                    "PRESERVE",
+                    "PASS",
+                    "behavior probe passed in fixture",
+                    ("fixture:behavior",),
+                ),
+            ),
+            root_review=roots_pass(),
+            reason="adapter integration fixture",
+            evidence_refs=("fixture:transition",),
+        )
+        transition.verify()
+        self.assertEqual(
+            transition.to_dict()["parent_snapshot_sha256"],
+            parent["sha256"],
+        )
+
+
+class SemanticRehashTamperTests(unittest.TestCase):
+    def test_rehashed_genesis_cannot_remove_commit_evidence(self):
+        forged = genesis().to_dict()
+        forged["commit_evidence"] = ""
+        forged = _rehash_record(forged)
+        with self.assertRaises(IntegrityError):
+            GenesisRecord.from_dict(forged)
+
+    def test_rehashed_genesis_cannot_change_immutability_rule(self):
+        forged = genesis().to_dict()
+        forged["immutability_rule"] = "rewritable"
+        forged = _rehash_record(forged)
+        with self.assertRaises(IntegrityError):
+            GenesisRecord.from_dict(forged)
+
+    def test_rehashed_genesis_cannot_forge_birth_validation_schema(self):
+        forged = genesis().to_dict()
+        forged["birth_validation"]["schema"] = "fake/v9"
+        forged["birth_validation_sha256"] = sha256_value(
+            forged["birth_validation"]
+        )
+        forged = _rehash_record(forged)
+        with self.assertRaises(IntegrityError):
+            GenesisRecord.from_dict(forged)
+
+    def test_rehashed_transition_cannot_duplicate_probe_decisions(self):
+        g0 = genesis()
+        transition = TransitionRecord.create(
+            lineage=g0.lineage,
+            previous_event_id=g0.record_id,
+            parent_state_id=g0.record_id,
+            parent_snapshot=g0.snapshot,
+            next_snapshot=snap(step=1, value=2),
+            continuity=(
+                ContinuityDecision(
+                    "a",
+                    "PRESERVE",
+                    "PASS",
+                    "ok",
+                ),
+            ),
+            root_review=roots_pass(),
+            reason="fixture",
+        ).to_dict()
+        transition["continuity"].append(
+            copy.deepcopy(transition["continuity"][0])
+        )
+        transition = _rehash_record(transition)
+        with self.assertRaises(IntegrityError):
+            TransitionRecord.from_dict(transition)
+
+    def test_rehashed_rollback_cannot_change_append_only_rule(self):
+        g0 = genesis()
+        receipt = RollbackReceipt.create(
+            lineage=g0.lineage,
+            previous_event_id=g0.record_id,
+            from_state_id=g0.record_id,
+            target_state_id=g0.record_id,
+            target_snapshot=g0.snapshot,
+            reason="fixture",
+            restore_verification_sha256=g0.snapshot["sha256"],
+        ).to_dict()
+        receipt["history_rule"] = "rewritable"
+        receipt = _rehash_record(receipt)
+        with self.assertRaises(IntegrityError):
+            RollbackReceipt.from_dict(receipt)
+
+
 if __name__ == "__main__":
     unittest.main()

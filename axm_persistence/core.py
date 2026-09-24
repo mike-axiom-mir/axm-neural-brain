@@ -76,6 +76,17 @@ def verify_snapshot(snapshot: Mapping[str, Any], *, expected_state_schema: str |
     missing = required - set(snapshot)
     if missing:
         raise IntegrityError(f"snapshot missing fields: {sorted(missing)}")
+    if not isinstance(snapshot["state_schema"], str) or not snapshot["state_schema"].strip():
+        raise IntegrityError("snapshot state_schema must be a non-empty string")
+    if not isinstance(snapshot["body"], Mapping):
+        raise IntegrityError("snapshot body must be a mapping")
+    digest = snapshot["sha256"]
+    if (
+        not isinstance(digest, str)
+        or len(digest) != 64
+        or any(ch not in "0123456789abcdef" for ch in digest)
+    ):
+        raise IntegrityError("snapshot sha256 must be a lowercase SHA-256 digest")
     payload = {
         "schema": snapshot["schema"],
         "state_schema": snapshot["state_schema"],
@@ -85,7 +96,7 @@ def verify_snapshot(snapshot: Mapping[str, Any], *, expected_state_schema: str |
         raise IntegrityError(f"unsupported snapshot schema: {payload['schema']!r}")
     if expected_state_schema is not None and payload["state_schema"] != expected_state_schema:
         raise IntegrityError("state schema mismatch")
-    if snapshot["sha256"] != sha256_value(payload):
+    if digest != sha256_value(payload):
         raise IntegrityError("snapshot integrity check failed")
     return deepcopy(dict(snapshot))
 
@@ -295,19 +306,49 @@ class GenesisRecord:
         r = self.record
         if r.get("schema") != GENESIS_SCHEMA or r.get("previous_event_id") is not None:
             raise IntegrityError("invalid genesis schema/event ancestry")
+        lineage = str(r.get("lineage", "")).strip()
+        if not lineage:
+            raise IntegrityError("genesis lineage must be non-empty")
+        if not str(r.get("admitting_authority", "")).strip():
+            raise IntegrityError("genesis admitting_authority must be non-empty")
+        if not str(r.get("commit_evidence", "")).strip():
+            raise IntegrityError("genesis commit_evidence must be non-empty")
+        provenance = r.get("provenance")
+        if not isinstance(provenance, Mapping) or not dict(provenance):
+            raise IntegrityError("genesis provenance must be a non-empty mapping")
+        branch_from = r.get("branch_from")
+        if branch_from is not None:
+            if not isinstance(branch_from, Mapping):
+                raise IntegrityError("genesis branch_from must be a mapping")
+            for field in ("lineage", "state_id", "reason"):
+                if not str(branch_from.get(field, "")).strip():
+                    raise IntegrityError(f"genesis branch_from {field} must be non-empty")
+        if r.get("immutability_rule") != (
+            "G0 is immutable; correction requires a new lineage/version rather than silent replacement"
+        ):
+            raise IntegrityError("genesis immutability rule mismatch")
         verify_snapshot(r["snapshot"])
         if r.get("snapshot_id") != snapshot_identity(r["snapshot"]):
             raise IntegrityError("genesis snapshot identity mismatch")
         roots = r.get("roots", {})
         if roots.get("contract") != AXM_ROOT_CONTRACT or roots.get("sha256") != AXM_ROOT_CONTRACT_SHA256:
             raise IntegrityError("genesis AXM root contract mismatch")
-        birth = BirthValidation.from_dict(r["birth_validation"])
+        birth_raw = r.get("birth_validation")
+        if not isinstance(birth_raw, Mapping):
+            raise IntegrityError("genesis birth validation must be a mapping")
+        if birth_raw.get("schema") != "axm.genesis-validation/v1":
+            raise IntegrityError("genesis birth validation schema mismatch")
+        birth = BirthValidation.from_dict(birth_raw)
+        if birth_raw.get("passed") is not birth.passed:
+            raise IntegrityError("genesis birth validation decision mismatch")
         if not birth.passed or r.get("birth_validation_sha256") != sha256_value(birth.to_dict()):
             raise IntegrityError("genesis birth validation mismatch")
+        interface_sha = r.get("interface_contract_sha256")
+        if interface_sha is not None and not str(interface_sha).strip():
+            raise IntegrityError("genesis interface contract fingerprint must be non-empty when present")
         expected = sha256_value(_record_body(r))
         if r.get("record_sha256") != expected:
             raise IntegrityError("genesis record integrity check failed")
-        lineage = _nonempty(r.get("lineage"), "lineage")
         if r.get("record_id") != f"g0:{lineage}:{expected}":
             raise IntegrityError("genesis identity mismatch")
 
@@ -385,21 +426,37 @@ class TransitionRecord:
         r = self.record
         if r.get("schema") != TRANSITION_SCHEMA:
             raise IntegrityError("unsupported transition schema")
+        lineage = str(r.get("lineage", "")).strip()
+        if not lineage:
+            raise IntegrityError("transition lineage must be non-empty")
+        for field in ("previous_event_id", "parent_state_id", "reason"):
+            if not str(r.get(field, "")).strip():
+                raise IntegrityError(f"transition {field} must be non-empty")
+        parent_sha = r.get("parent_snapshot_sha256")
+        if (
+            not isinstance(parent_sha, str)
+            or len(parent_sha) != 64
+            or any(ch not in "0123456789abcdef" for ch in parent_sha)
+        ):
+            raise IntegrityError("transition parent snapshot fingerprint is invalid")
         verify_snapshot(r["next_snapshot"])
         if r.get("next_snapshot_id") != snapshot_identity(r["next_snapshot"]):
             raise IntegrityError("transition next snapshot identity mismatch")
         decisions = [ContinuityDecision.from_dict(x) for x in r.get("continuity", [])]
         if not decisions:
             raise IntegrityError("transition has no continuity decisions")
+        if len({item.probe_id for item in decisions}) != len(decisions):
+            raise IntegrityError("transition contains duplicate continuity decisions")
         review = normalize_root_review(r["root_review"])
         if any(review[root]["status"] != "PASS" for root in AXM_ROOTS):
             raise IntegrityError("canonical transition contains a held root")
         if r.get("root_contract_sha256") != AXM_ROOT_CONTRACT_SHA256:
             raise IntegrityError("transition root contract mismatch")
+        if any(not str(ref).strip() for ref in r.get("evidence_refs", ())):
+            raise IntegrityError("transition evidence references must be non-empty")
         expected = sha256_value(_record_body(r))
         if r.get("record_sha256") != expected:
             raise IntegrityError("transition record integrity check failed")
-        lineage = _nonempty(r.get("lineage"), "lineage")
         if r.get("record_id") != f"s:{lineage}:{expected}":
             raise IntegrityError("transition identity mismatch")
 
@@ -465,10 +522,30 @@ class RollbackReceipt:
         r = self.record
         if r.get("schema") != ROLLBACK_SCHEMA:
             raise IntegrityError("unsupported rollback schema")
+        lineage = str(r.get("lineage", "")).strip()
+        if not lineage:
+            raise IntegrityError("rollback lineage must be non-empty")
+        for field in ("previous_event_id", "from_state_id", "target_state_id", "reason"):
+            if not str(r.get(field, "")).strip():
+                raise IntegrityError(f"rollback {field} must be non-empty")
+        target_sha = r.get("target_snapshot_sha256")
+        restore_sha = r.get("restore_verification_sha256")
+        if (
+            not isinstance(target_sha, str)
+            or len(target_sha) != 64
+            or any(ch not in "0123456789abcdef" for ch in target_sha)
+            or restore_sha != target_sha
+        ):
+            raise IntegrityError("rollback target/restore fingerprint mismatch")
+        if r.get("history_rule") != (
+            "rollback changes active state pointer; admitted history remains append-only"
+        ):
+            raise IntegrityError("rollback append-only history rule mismatch")
+        if any(not str(ref).strip() for ref in r.get("evidence_refs", ())):
+            raise IntegrityError("rollback evidence references must be non-empty")
         expected = sha256_value(_record_body(r))
         if r.get("record_sha256") != expected:
             raise IntegrityError("rollback record integrity check failed")
-        lineage = _nonempty(r.get("lineage"), "lineage")
         if r.get("record_id") != f"rb:{lineage}:{expected}":
             raise IntegrityError("rollback identity mismatch")
 
