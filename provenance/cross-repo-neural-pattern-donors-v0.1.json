@@ -1,0 +1,67 @@
+{
+  "schema": "axm.cross-repo-neural-pattern-donors/v0.1",
+  "target_repo": "mike-axiom-mir/axm-neural-brain",
+  "target_branch": "codex/neural-persistence-lineage-v1-core-sync",
+  "integration_scope": "checkpoint-receipt and recovery truth-boundary patterns only; no donor authority or neural learning implementation imported",
+  "donors": [
+    {
+      "repository": "mike-axiom-mir/axm-state-research",
+      "inspected_main": "37bc3b68d035838195a2fd2c1ef5e12672d183b4",
+      "path": "experiments/06-unlabeled-multiproject-closure-challenge/unlabeled_closure/checkpoint.py",
+      "git_blob_sha": "a6732806dd80f02206fa476cb5ace94a33e8a6ba",
+      "adopted": [
+        "schema-bound checkpoint envelope",
+        "payload/provenance hash validation",
+        "quarantine/refuse untrusted recovery"
+      ]
+    },
+    {
+      "repository": "mike-axiom-mir/axm-protocol-evolution",
+      "inspected_main": "28f3f0c94d11936dd04adb3a367d803a8cbe24ec",
+      "path": "protocol_evolution/compatibility.py",
+      "git_blob_sha": "a3836ecb31015b1f9e7236560e19505c5d78c41e",
+      "adopted": [
+        "strict canonical JSON with non-finite rejection",
+        "explicit compatibility/truth boundaries",
+        "receipt digest binding without authenticity overclaim"
+      ]
+    },
+    {
+      "repository": "mike-axiom-mir/axm-collaboration-platform",
+      "inspected_main": "c335244e9005df26c0edb99114164765addf6ed0",
+      "path": "shared/module-evolution-ledger/local-append-adapter.js",
+      "git_blob_sha": "b1cb9f0005db4043620d0aa599f23b259aeeffbc",
+      "adopted": [
+        "append-only revision discipline",
+        "hash-chain integrity pattern",
+        "host-local persistence authority boundary"
+      ]
+    },
+    {
+      "repository": "mike-axiom-mir/axm-collaboration-platform",
+      "inspected_main": "c335244e9005df26c0edb99114164765addf6ed0",
+      "path": "shared/model-shadow-history-checkpoint-pairwise/model-shadow-history-checkpoint-pairwise.js",
+      "git_blob_sha": "b9c4ec741a677537e697f392db842c0c49546ae3",
+      "adopted": [
+        "explicit exact-replay/forward-extension/rollback/fork distinctions",
+        "preserve-both-and-HOLD posture for ambiguous continuity"
+      ]
+    },
+    {
+      "repository": "mike-axiom-mir/axm-invariant-lab",
+      "inspected_main": "b65dc277802de27dca6f92ae68b1afc8c1d0920a",
+      "path": "adapters/state_research_stateborn_transport.py",
+      "git_blob_sha": "25a73a1ccaee6d4e5c63761a10303a8f62c97d21",
+      "adopted": [
+        "accepted-only replay barrier rule",
+        "rejected/corrupt attempts do not become replay barriers"
+      ]
+    }
+  ],
+  "truth_boundary": {
+    "copied_verbatim": false,
+    "adapted_into_existing_architecture": true,
+    "donor_test_results_do_not_automatically_prove_target_tests": true,
+    "target_ci_required": true
+  }
+}
