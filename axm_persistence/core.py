@@ -10,6 +10,7 @@ SNAPSHOT_SCHEMA = "axm.state-snapshot/v1"
 GENESIS_SCHEMA = "axm.genesis-admission/v1"
 TRANSITION_SCHEMA = "axm.lineage-transition/v1"
 ROLLBACK_SCHEMA = "axm.rollback-receipt/v1"
+CHECKPOINT_SCHEMA = "axm.checkpoint-receipt/v1"
 JOURNAL_SCHEMA = "axm.lineage-journal/v1"
 
 AXM_ROOTS = ("TRUTH", "AGENCY", "CONTINUITY", "WISDOM_BEFORE_SPEED")
@@ -557,6 +558,121 @@ class RollbackReceipt:
         return deepcopy(self.record)
 
 
+@dataclass(frozen=True)
+class CheckpointReceipt:
+    """Evidence that the host durably stored and restore-verified the active state.
+
+    This record does not write files and does not grant persistence authority. The
+    host owns the storage location and durable write; lineage only binds the host's
+    opaque durable reference to the exact active snapshot after restore verification.
+    """
+
+    record: dict
+
+    @classmethod
+    def create(
+        cls,
+        *,
+        lineage: str,
+        previous_event_id: str,
+        state_id: str,
+        state_snapshot: Mapping[str, Any],
+        durable_ref: str,
+        restore_verification_sha256: str,
+        evidence_refs: Iterable[str] = (),
+    ) -> "CheckpointReceipt":
+        lineage = _nonempty(lineage, "lineage")
+        snap = verify_snapshot(state_snapshot)
+        restore_hash = _nonempty(
+            restore_verification_sha256, "restore_verification_sha256"
+        )
+        if restore_hash != snap["sha256"]:
+            raise LineageError(
+                "checkpoint restore verification does not match state snapshot"
+            )
+        body = {
+            "schema": CHECKPOINT_SCHEMA,
+            "lineage": lineage,
+            "previous_event_id": _nonempty(
+                previous_event_id, "previous_event_id"
+            ),
+            "state_id": _nonempty(state_id, "state_id"),
+            "state_snapshot_sha256": snap["sha256"],
+            "durable_ref": _nonempty(durable_ref, "durable_ref"),
+            "restore_verification_sha256": restore_hash,
+            "evidence_refs": [
+                _nonempty(x, "checkpoint evidence ref") for x in evidence_refs
+            ],
+            "authority_rule": (
+                "host owns persistence location and durable write; "
+                "lineage records checkpoint evidence only"
+            ),
+            "verification_rule": (
+                "checkpoint receipt is admissible only after restore verification "
+                "matches the active snapshot"
+            ),
+        }
+        digest = sha256_value(body)
+        record = {
+            **body,
+            "record_sha256": digest,
+            "record_id": f"cp:{lineage}:{digest}",
+        }
+        obj = cls(record)
+        obj.verify()
+        return obj
+
+    @classmethod
+    def from_dict(cls, data: Mapping[str, Any]) -> "CheckpointReceipt":
+        obj = cls(deepcopy(dict(data)))
+        obj.verify()
+        return obj
+
+    def verify(self) -> None:
+        r = self.record
+        if r.get("schema") != CHECKPOINT_SCHEMA:
+            raise IntegrityError("unsupported checkpoint receipt schema")
+        lineage = str(r.get("lineage", "")).strip()
+        if not lineage:
+            raise IntegrityError("checkpoint lineage must be non-empty")
+        for field in ("previous_event_id", "state_id", "durable_ref"):
+            if not str(r.get(field, "")).strip():
+                raise IntegrityError(f"checkpoint {field} must be non-empty")
+        state_sha = r.get("state_snapshot_sha256")
+        restore_sha = r.get("restore_verification_sha256")
+        if (
+            not isinstance(state_sha, str)
+            or len(state_sha) != 64
+            or any(ch not in "0123456789abcdef" for ch in state_sha)
+            or restore_sha != state_sha
+        ):
+            raise IntegrityError("checkpoint state/restore fingerprint mismatch")
+        if r.get("authority_rule") != (
+            "host owns persistence location and durable write; "
+            "lineage records checkpoint evidence only"
+        ):
+            raise IntegrityError("checkpoint host-authority rule mismatch")
+        if r.get("verification_rule") != (
+            "checkpoint receipt is admissible only after restore verification "
+            "matches the active snapshot"
+        ):
+            raise IntegrityError("checkpoint restore-verification rule mismatch")
+        if any(not str(ref).strip() for ref in r.get("evidence_refs", ())):
+            raise IntegrityError("checkpoint evidence references must be non-empty")
+        expected = sha256_value(_record_body(r))
+        if r.get("record_sha256") != expected:
+            raise IntegrityError("checkpoint record integrity check failed")
+        if r.get("record_id") != f"cp:{lineage}:{expected}":
+            raise IntegrityError("checkpoint identity mismatch")
+
+    @property
+    def record_id(self) -> str:
+        return self.record["record_id"]
+
+    def to_dict(self) -> dict:
+        return deepcopy(self.record)
+
+
 class LineageJournal:
     def __init__(self, genesis: GenesisRecord) -> None:
         genesis.verify()
@@ -617,6 +733,21 @@ class LineageJournal:
         self._events.append(receipt.to_dict())
         self._active_state_id = r["target_state_id"]
 
+    def append_checkpoint(self, receipt: CheckpointReceipt) -> None:
+        receipt.verify()
+        r = receipt.record
+        if r["lineage"] != self._lineage:
+            raise LineageError("checkpoint lineage mismatch")
+        if r["previous_event_id"] != self.last_event_id:
+            raise LineageError("checkpoint does not extend current event chain")
+        if r["state_id"] != self._active_state_id:
+            raise LineageError("checkpoint state is not current active state")
+        if r["state_snapshot_sha256"] != self.active_snapshot["sha256"]:
+            raise LineageError("checkpoint active snapshot hash mismatch")
+        if r["restore_verification_sha256"] != self.active_snapshot["sha256"]:
+            raise LineageError("checkpoint restore verification mismatch")
+        self._events.append(receipt.to_dict())
+
     def to_snapshot(self) -> dict:
         return make_snapshot(
             JOURNAL_SCHEMA,
@@ -644,6 +775,8 @@ class LineageJournal:
                 journal.append_transition(TransitionRecord.from_dict(raw))
             elif schema == ROLLBACK_SCHEMA:
                 journal.append_rollback(RollbackReceipt.from_dict(raw))
+            elif schema == CHECKPOINT_SCHEMA:
+                journal.append_checkpoint(CheckpointReceipt.from_dict(raw))
             else:
                 raise IntegrityError(f"unsupported journal event schema: {schema!r}")
         if journal.active_state_id != body.get("active_state_id"):
