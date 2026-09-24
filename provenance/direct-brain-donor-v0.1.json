@@ -4,6 +4,38 @@
   "donor_pull_request": 3,
   "donor_branch": "codex/axm-direct-brain-v0.1",
   "donor_commit": "163410ce05a42879dca478d8ea0de7f6d17c4820",
+  "extraction_target": "mike-axiom-mir/axm-neural-brain",
+  "extraction_branch": "codex/neural-core-extraction-v1",
   "scope": "neural-core-only",
+  "exact_copy_files": {
+    "neural/axm_brain/core.py": "b08f3beefd08704c46eaf349c9b5b83bafdbec42",
+    "neural/axm_brain/state.py": "84503fff80d75eb14a22791dc19f65b4fbbaf698",
+    "neural/axm_brain/contract.py": "9677511ab423f4bca4770e3d5b47c5ece2829ea3",
+    "neural/axm_brain/taxonomy.py": "86dcac7b9359dda5909903b995f0a440b541fe22",
+    "neural/axm_brain/roots.py": "c19843a6f91d15d827490ae4151803e2682e9f19",
+    "neural/axm_brain/analyzer.py": "7ed256507edd5572cb909fd80991ba1fcb753d4b",
+    "neural/axm_brain/seed.json": "3b80d8dddd52d883a993c3ffc77f03d2ef5f0eac",
+    "neural/axm_brain/tests/test_brain.py": "1e33a2dec3fda6470cb0f2492a27162981bc199f",
+    "neural/axm_brain/tests/test_contract.py": "eec42a146b7235c29ff2dd06b89d73c15a57da28",
+    "neural/axm_brain/tests/test_analyzer.py": "dc6ae6cc26b82cbf784d1473bfc559e5a09d689d"
+  },
+  "adapted_files": {
+    "neural/axm_brain/__init__.py": "narrowed exports; Genesis/Continuity remain separate convergence lane",
+    "README.md": "dedicated-repo boundary and evidence statement",
+    ".github/workflows/neural-core.yml": "dedicated-repo CI"
+  },
+  "authority_boundary": {
+    "network": false,
+    "shell": false,
+    "tools": false,
+    "autonomous_filesystem": false,
+    "host_controls": [
+      "permissions",
+      "persistence locations",
+      "observations",
+      "actions",
+      "execution"
+    ]
+  },
   "truth_boundary": "parameter change alone is not evidence of useful learning"
 }
