@@ -5,6 +5,8 @@ on:
     paths:
       - 'axm_persistence/**'
       - 'tests/test_persistence_lineage.py'
+      - 'provenance/cross-repo-neural-pattern-donors-v0.1.json'
+      - 'PERSISTENCE_LINEAGE.md'
       - '.github/workflows/neural-lineage.yml'
   pull_request:
     paths:
