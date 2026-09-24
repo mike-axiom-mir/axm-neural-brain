@@ -1,0 +1,27 @@
+name: Neural lineage verification
+
+on:
+  push:
+    paths:
+      - 'axm_persistence/**'
+      - 'tests/test_persistence_lineage.py'
+      - '.github/workflows/neural-lineage.yml'
+  pull_request:
+    paths:
+      - 'axm_persistence/**'
+      - 'tests/test_persistence_lineage.py'
+      - '.github/workflows/neural-lineage.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run persistence, lineage and recovery tests
+        run: python -m unittest tests.test_persistence_lineage -v
