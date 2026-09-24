@@ -1,0 +1,27 @@
+{
+  "schema": "axm-host-bridge-pin/v1",
+  "contract_owner_repo": "mike-axiom-mir/axm-neural-network",
+  "contract_owner_commit": "27ae1f00ca806b95de327eca995c912892df6ac2",
+  "bridge_schema": "axm-host-brain-bridge/v1",
+  "experience_schema": "axm-host-experience/v1",
+  "action_schema": "axm-host-action-proposal/v1",
+  "checkpoint_schema": "axm-host-brain-checkpoint/v1",
+  "uc_reference": {
+    "donor_repo": "mike-axiom-mir/axm-uc-neural",
+    "donor_commit": "163410ce05a42879dca478d8ea0de7f6d17c4820",
+    "brain_io_sha256": "dfe07368b941bb8ac4eaa635f7a50ca652d01a43db90d91c24ef2c0751105fa1",
+    "bridge_contract_sha256": "9f15737c495921540906da9ab9394002de4a8b5db1d271b5dab0742b3f24656a"
+  },
+  "authority": {
+    "permissions": "host",
+    "persistence": "host",
+    "observations": "host",
+    "execution": "host"
+  },
+  "roots": [
+    "truth",
+    "agency-non-domination",
+    "continuity",
+    "wisdom-before-speed"
+  ]
+}
