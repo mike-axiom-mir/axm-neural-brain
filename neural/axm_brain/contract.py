@@ -3,6 +3,7 @@ from __future__ import annotations
 from dataclasses import asdict, dataclass
 import hashlib
 import json
+from math import isfinite
 from typing import Mapping, Sequence
 
 from .core import AXMBrain, BrainConfig
@@ -18,13 +19,40 @@ class Channel:
     def validate(self) -> None:
         if not self.name or self.name.strip() != self.name:
             raise ValueError("channel name must be non-empty and trimmed")
+        for field_name, raw in (
+            ("minimum", self.minimum),
+            ("maximum", self.maximum),
+            ("default", self.default),
+        ):
+            try:
+                number = float(raw)
+            except (TypeError, ValueError) as exc:
+                raise ValueError(
+                    f"channel {self.name}: {field_name} must be a finite number"
+                ) from exc
+            if not isfinite(number):
+                raise ValueError(
+                    f"channel {self.name}: {field_name} must be finite"
+                )
         if self.maximum <= self.minimum:
             raise ValueError(f"channel {self.name}: maximum must be greater than minimum")
         if not self.minimum <= self.default <= self.maximum:
             raise ValueError(f"channel {self.name}: default outside channel range")
 
     def encode(self, value: float) -> float:
-        value = max(self.minimum, min(self.maximum, float(value)))
+        try:
+            value = float(value)
+        except (TypeError, ValueError) as exc:
+            raise ValueError(
+                f"channel {self.name}: value must be a finite number"
+            ) from exc
+        if not isfinite(value):
+            raise ValueError(f"channel {self.name}: value must be finite")
+        if value < self.minimum or value > self.maximum:
+            raise ValueError(
+                f"channel {self.name}: value {value} outside "
+                f"[{self.minimum}, {self.maximum}]"
+            )
         unit = (value - self.minimum) / (self.maximum - self.minimum)
         return unit * 2.0 - 1.0
 
@@ -57,6 +85,7 @@ class BrainIOContract:
             self.to_dict(),
             sort_keys=True,
             separators=(",", ":"),
+            allow_nan=False,
         ).encode("utf-8")
         return hashlib.sha256(raw).hexdigest()
 
@@ -92,10 +121,18 @@ class BrainIOContract:
             raise ValueError(
                 f"expected {len(self.outputs)} outputs, got {len(values)}"
             )
-        return {
-            name: float(value)
-            for name, value in zip(self.outputs, values)
-        }
+        decoded = {}
+        for name, value in zip(self.outputs, values):
+            try:
+                number = float(value)
+            except (TypeError, ValueError) as exc:
+                raise ValueError(
+                    f"output {name}: value must be a finite number"
+                ) from exc
+            if not isfinite(number):
+                raise ValueError(f"output {name}: value must be finite")
+            decoded[name] = number
+        return decoded
 
     def new_brain(
         self,
