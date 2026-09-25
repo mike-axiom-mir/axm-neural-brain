@@ -1,0 +1,8 @@
+test_direct_experience_improves_unseen_seeds_and_retains_state (test_micro_learning.DirectSimulationLearningTests.test_direct_experience_improves_unseen_seeds_and_retains_state) ... ok
+test_overlap_and_budget_fail_without_parent_mutation (test_micro_learning.DirectSimulationLearningTests.test_overlap_and_budget_fail_without_parent_mutation) ... ok
+test_repeat_preserves_trace_and_learned_state (test_micro_learning.DirectSimulationLearningTests.test_repeat_preserves_trace_and_learned_state) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.641s
+
+OK

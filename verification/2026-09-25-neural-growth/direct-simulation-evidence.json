@@ -1,0 +1,363 @@
+{
+  "schema": "axm.direct-simulation-evidence/v1",
+  "python": "3.12.14",
+  "platform": "Linux",
+  "limits": [
+    "Numeric micro-dynamics only, fixed host curriculum, no external-world or UC claim.",
+    "All three brain seeds use the same declared training/evaluation simulator distributions."
+  ],
+  "format": "compact evidence; use --full to retain complete checkpoints and batch records",
+  "runs": [
+    {
+      "body": {
+        "schema": "axm.micro-learning/v1",
+        "simulator_id": "axm.micro-dynamics",
+        "simulator_version": "1",
+        "simulator_backend": "python",
+        "rules": {
+          "position_decay": 0.6,
+          "velocity_coupling": 0.2,
+          "action_gain": 0.5,
+          "horizon": 12
+        },
+        "experience_source": "deterministic_simulation",
+        "training_seeds": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "evaluation_seeds": [
+          100,
+          101,
+          102,
+          103,
+          104,
+          105,
+          106,
+          107,
+          108,
+          109,
+          110,
+          111
+        ],
+        "epochs": 6,
+        "batch_size": 8,
+        "experience_trace_sha256": "e4cd3ff6fc843c8fb6ade35dd264b458fbcb5c4745200188cd7be37766e12e8e",
+        "training_transitions": 864,
+        "completed_training_episodes": 72,
+        "unique_training_experiences": 864,
+        "duplicate_experiences": 0,
+        "held_out_before": {
+          "mse": 0.2471331805755943,
+          "transitions": 144,
+          "experience_source": "deterministic_simulation"
+        },
+        "held_out_after": {
+          "mse": 0.004317615035188791,
+          "transitions": 144,
+          "experience_source": "deterministic_simulation"
+        },
+        "held_out_after_restore": {
+          "mse": 0.004317615035188791,
+          "transitions": 144,
+          "experience_source": "deterministic_simulation"
+        },
+        "parent_unchanged": true,
+        "restore_exact": true,
+        "timing": {
+          "wall_seconds": 0.610144529999161,
+          "cpu_seconds": 0.608111905,
+          "simulation_and_verification_seconds": 0.17884685900025943,
+          "learning_and_trace_seconds": 0.1192303399911907,
+          "transitions_per_second": 1416.057929751805
+        },
+        "memory_measurement": null,
+        "persistent_bytes_written_by_library": 0,
+        "adoption_state": "archive-only",
+        "automatic_adoption": false,
+        "limits": [
+          "Numeric reference dynamics only; simulation is not external-world evidence.",
+          "Host-defined fixed action curriculum; learned simulation selection is not implemented.",
+          "Timings include receipt generation and integrity checks; no RAM/GPU measurement."
+        ],
+        "parent_sha256": "58fdd3b2e3e366510ee24f85d558e27a00e43cb0e8b32a5b502315a3f69c465a",
+        "parent_config": {
+          "input_size": 3,
+          "hidden_size": 8,
+          "output_size": 2,
+          "seed": 17,
+          "learning_rate": 0.04,
+          "reward_learning_rate": 0.006,
+          "eligibility_decay": 0.92,
+          "reward_baseline_decay": 0.98,
+          "replay_capacity": 32,
+          "sleep_replay_passes": 2,
+          "sleep_learning_scale": 0.35,
+          "sleep_prune_threshold": 0.0001,
+          "weight_limit": 3.0
+        },
+        "candidate_sha256": "609f45570a1920a72c9a8ffb84246a28c532fd718a99c86ba08d78f395819c5b",
+        "candidate_config": {
+          "input_size": 3,
+          "hidden_size": 8,
+          "output_size": 2,
+          "seed": 17,
+          "learning_rate": 0.04,
+          "reward_learning_rate": 0.006,
+          "eligibility_decay": 0.92,
+          "reward_baseline_decay": 0.98,
+          "replay_capacity": 32,
+          "sleep_replay_passes": 2,
+          "sleep_learning_scale": 0.35,
+          "sleep_prune_threshold": 0.0001,
+          "weight_limit": 3.0
+        },
+        "batch_trace_sha256": "528ae243ba79ffcffc3c2fb78bd410133390bab82ada5403c86d85836cdb0b1c"
+      },
+      "full_receipt_sha256": "070c7e329ece64d54f62c6ad73423e0da5398bc55861324b63774d6af734621a"
+    },
+    {
+      "body": {
+        "schema": "axm.micro-learning/v1",
+        "simulator_id": "axm.micro-dynamics",
+        "simulator_version": "1",
+        "simulator_backend": "python",
+        "rules": {
+          "position_decay": 0.6,
+          "velocity_coupling": 0.2,
+          "action_gain": 0.5,
+          "horizon": 12
+        },
+        "experience_source": "deterministic_simulation",
+        "training_seeds": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "evaluation_seeds": [
+          100,
+          101,
+          102,
+          103,
+          104,
+          105,
+          106,
+          107,
+          108,
+          109,
+          110,
+          111
+        ],
+        "epochs": 6,
+        "batch_size": 8,
+        "experience_trace_sha256": "e4cd3ff6fc843c8fb6ade35dd264b458fbcb5c4745200188cd7be37766e12e8e",
+        "training_transitions": 864,
+        "completed_training_episodes": 72,
+        "unique_training_experiences": 864,
+        "duplicate_experiences": 0,
+        "held_out_before": {
+          "mse": 0.14306903700923956,
+          "transitions": 144,
+          "experience_source": "deterministic_simulation"
+        },
+        "held_out_after": {
+          "mse": 0.0010551411415901167,
+          "transitions": 144,
+          "experience_source": "deterministic_simulation"
+        },
+        "held_out_after_restore": {
+          "mse": 0.0010551411415901167,
+          "transitions": 144,
+          "experience_source": "deterministic_simulation"
+        },
+        "parent_unchanged": true,
+        "restore_exact": true,
+        "timing": {
+          "wall_seconds": 0.4874050950002129,
+          "cpu_seconds": 0.4872066399999999,
+          "simulation_and_verification_seconds": 0.1424931590045162,
+          "learning_and_trace_seconds": 0.09724418598307238,
+          "transitions_per_second": 1772.652786897155
+        },
+        "memory_measurement": null,
+        "persistent_bytes_written_by_library": 0,
+        "adoption_state": "archive-only",
+        "automatic_adoption": false,
+        "limits": [
+          "Numeric reference dynamics only; simulation is not external-world evidence.",
+          "Host-defined fixed action curriculum; learned simulation selection is not implemented.",
+          "Timings include receipt generation and integrity checks; no RAM/GPU measurement."
+        ],
+        "parent_sha256": "2007674666abe0a3feda721974ce70683efc471679ea6290118e11f391adf49e",
+        "parent_config": {
+          "input_size": 3,
+          "hidden_size": 8,
+          "output_size": 2,
+          "seed": 41,
+          "learning_rate": 0.04,
+          "reward_learning_rate": 0.006,
+          "eligibility_decay": 0.92,
+          "reward_baseline_decay": 0.98,
+          "replay_capacity": 32,
+          "sleep_replay_passes": 2,
+          "sleep_learning_scale": 0.35,
+          "sleep_prune_threshold": 0.0001,
+          "weight_limit": 3.0
+        },
+        "candidate_sha256": "db838d88eb55fc99d09e287e2b8e29a0b6f44edb9f147baac8c9559b3b4e4b5a",
+        "candidate_config": {
+          "input_size": 3,
+          "hidden_size": 8,
+          "output_size": 2,
+          "seed": 41,
+          "learning_rate": 0.04,
+          "reward_learning_rate": 0.006,
+          "eligibility_decay": 0.92,
+          "reward_baseline_decay": 0.98,
+          "replay_capacity": 32,
+          "sleep_replay_passes": 2,
+          "sleep_learning_scale": 0.35,
+          "sleep_prune_threshold": 0.0001,
+          "weight_limit": 3.0
+        },
+        "batch_trace_sha256": "9cb2e08dbf3544c78bfcddb46561eceacece0069045c23554c77358425b52e21"
+      },
+      "full_receipt_sha256": "1e408b67fe3288c8b74414e47bf3d9c4909cb9975b4220210d41d2c1d14d61e2"
+    },
+    {
+      "body": {
+        "schema": "axm.micro-learning/v1",
+        "simulator_id": "axm.micro-dynamics",
+        "simulator_version": "1",
+        "simulator_backend": "python",
+        "rules": {
+          "position_decay": 0.6,
+          "velocity_coupling": 0.2,
+          "action_gain": 0.5,
+          "horizon": 12
+        },
+        "experience_source": "deterministic_simulation",
+        "training_seeds": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "evaluation_seeds": [
+          100,
+          101,
+          102,
+          103,
+          104,
+          105,
+          106,
+          107,
+          108,
+          109,
+          110,
+          111
+        ],
+        "epochs": 6,
+        "batch_size": 8,
+        "experience_trace_sha256": "e4cd3ff6fc843c8fb6ade35dd264b458fbcb5c4745200188cd7be37766e12e8e",
+        "training_transitions": 864,
+        "completed_training_episodes": 72,
+        "unique_training_experiences": 864,
+        "duplicate_experiences": 0,
+        "held_out_before": {
+          "mse": 0.049454014710152185,
+          "transitions": 144,
+          "experience_source": "deterministic_simulation"
+        },
+        "held_out_after": {
+          "mse": 0.002191249126914994,
+          "transitions": 144,
+          "experience_source": "deterministic_simulation"
+        },
+        "held_out_after_restore": {
+          "mse": 0.002191249126914994,
+          "transitions": 144,
+          "experience_source": "deterministic_simulation"
+        },
+        "parent_unchanged": true,
+        "restore_exact": true,
+        "timing": {
+          "wall_seconds": 0.5210572990017681,
+          "cpu_seconds": 0.5194093500000001,
+          "simulation_and_verification_seconds": 0.14375309198476316,
+          "learning_and_trace_seconds": 0.10874182001316512,
+          "transitions_per_second": 1658.1669648524935
+        },
+        "memory_measurement": null,
+        "persistent_bytes_written_by_library": 0,
+        "adoption_state": "archive-only",
+        "automatic_adoption": false,
+        "limits": [
+          "Numeric reference dynamics only; simulation is not external-world evidence.",
+          "Host-defined fixed action curriculum; learned simulation selection is not implemented.",
+          "Timings include receipt generation and integrity checks; no RAM/GPU measurement."
+        ],
+        "parent_sha256": "0d8a43f4bbfd6fd152bcffa1e88217a95a952e3e7158580ef73b8547bd46a265",
+        "parent_config": {
+          "input_size": 3,
+          "hidden_size": 8,
+          "output_size": 2,
+          "seed": 73,
+          "learning_rate": 0.04,
+          "reward_learning_rate": 0.006,
+          "eligibility_decay": 0.92,
+          "reward_baseline_decay": 0.98,
+          "replay_capacity": 32,
+          "sleep_replay_passes": 2,
+          "sleep_learning_scale": 0.35,
+          "sleep_prune_threshold": 0.0001,
+          "weight_limit": 3.0
+        },
+        "candidate_sha256": "c78cb4d7233fa640ee4f4f40c26f10930d09c02163bdbd868904202551fb2894",
+        "candidate_config": {
+          "input_size": 3,
+          "hidden_size": 8,
+          "output_size": 2,
+          "seed": 73,
+          "learning_rate": 0.04,
+          "reward_learning_rate": 0.006,
+          "eligibility_decay": 0.92,
+          "reward_baseline_decay": 0.98,
+          "replay_capacity": 32,
+          "sleep_replay_passes": 2,
+          "sleep_learning_scale": 0.35,
+          "sleep_prune_threshold": 0.0001,
+          "weight_limit": 3.0
+        },
+        "batch_trace_sha256": "ecb3e816a95a2dd2895d557af14b1dfe3af461159460ac06a7a64c97ee56313f"
+      },
+      "full_receipt_sha256": "32e48d950953d21adf4e06423584154971601be7d5e91f90085a930c3d08d24d"
+    }
+  ]
+}
