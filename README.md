@@ -18,6 +18,8 @@ AXM Neural Brain is an active AXM build-and-test target for creating an AXM-owne
 
 ## Research
 
+- [AXM Hybrid Brain — Long-Term End Goal](research/AXM_HYBRID_BRAIN_END_GOAL.md) — independence without domination, dual/hybrid research hypothesis, specialist descendants, backend independence, and the staged path from framework-backed experiments toward an AXM-owned compute path.
+
 - [Neural Substrate + Hybrid Architecture Findings](research/NEURAL_SUBSTRATE_HYBRID_FINDINGS.md) — PyTorch/JAX/MLX boundaries, external precedents, prompt-to-action provenance, Genesis semantics, reproducibility controls, and a staged path toward an optional AXM-owned minimal neural substrate.
 
 ## Evidence boundary
