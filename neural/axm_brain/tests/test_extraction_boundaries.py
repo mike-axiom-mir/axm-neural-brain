@@ -15,7 +15,7 @@ def git_blob_sha(path: Path) -> str:
     return hashlib.sha1(header + data).hexdigest()
 
 class ExtractionBoundaryTests(unittest.TestCase):
-    def test_exact_donor_files_match_recorded_git_blobs(self):
+    def test_donor_provenance_distinguishes_exact_copies_from_adaptations(self):
         manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
         self.assertEqual(
             manifest["donor_commit"],
@@ -23,6 +23,21 @@ class ExtractionBoundaryTests(unittest.TestCase):
         )
         for relpath, expected_sha in manifest["exact_copy_files"].items():
             self.assertEqual(git_blob_sha(ROOT / relpath), expected_sha, relpath)
+
+        adaptations = manifest["adapted_from_donor"]
+        self.assertTrue(adaptations)
+        for relpath, record in adaptations.items():
+            self.assertNotEqual(
+                record["donor_blob_sha"],
+                record["current_blob_sha"],
+                relpath,
+            )
+            self.assertEqual(
+                git_blob_sha(ROOT / relpath),
+                record["current_blob_sha"],
+                relpath,
+            )
+            self.assertTrue(record["reason"].strip(), relpath)
 
     def test_runtime_core_has_no_ambient_authority_imports(self):
         forbidden = {
