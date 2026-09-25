@@ -22,7 +22,7 @@ AXM Neural Brain is an active AXM build-and-test target for creating an AXM-owne
 
 - [Neural Substrate + Hybrid Architecture Findings](research/NEURAL_SUBSTRATE_HYBRID_FINDINGS.md) — PyTorch/JAX/MLX boundaries, external precedents, prompt-to-action provenance, Genesis semantics, reproducibility controls, and a staged path toward an optional AXM-owned minimal neural substrate.
 
-- [Neural Innovation Engine](research/NEURAL_INNOVATION_ENGINE.md) — staged architecture for isolated neural descendants, experiment lineage, novelty/discovery archives, learned experiment selection, mechanism composition, and evidence required before claiming the brain has learned how to improve its own innovation search.
+- [Neural Innovation Engine](research/NEURAL_INNOVATION_ENGINE.md) — simulation-native learning, isolated neural descendants, experiment lineage, learned simulation/experiment selection, mechanism composition, and evidence required before claiming the brain has learned how to improve its own innovation search.
 
 ## Evidence boundary
 
