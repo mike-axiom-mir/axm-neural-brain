@@ -418,6 +418,9 @@ class HybridBrain:
             ),
         ).to_record()
         candidate_organ["status"] = "candidate"
+        candidate_body = dict(candidate_organ)
+        candidate_body.pop("sha256", None)
+        candidate_organ["sha256"] = sha256_value(candidate_body)
         candidate = {
             "schema": HYBRID_CANDIDATE_SCHEMA,
             "candidate": candidate_organ,
