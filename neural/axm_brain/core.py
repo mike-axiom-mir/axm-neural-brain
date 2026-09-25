@@ -1,12 +1,22 @@
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass
-from math import tanh
+from math import isfinite, tanh
 from typing import Iterable, Optional
 
 from .roots import AXM_ROOT_CONTRACT
 from .state import snapshot_payload, verify_snapshot
 from .taxonomy import ROOT_DIRECTIONS, normalize_directions
+
+
+def _finite_float(value, name: str) -> float:
+    try:
+        number = float(value)
+    except (TypeError, ValueError) as exc:
+        raise ValueError(f"{name} must be a finite number") from exc
+    if not isfinite(number):
+        raise ValueError(f"{name} must be finite")
+    return number
 
 
 class XorShift64:
@@ -51,6 +61,26 @@ class BrainConfig:
         for name in ("input_size", "hidden_size", "output_size"):
             if getattr(self, name) <= 0:
                 raise ValueError(f"{name} must be > 0")
+        for name in (
+            "learning_rate",
+            "reward_learning_rate",
+            "eligibility_decay",
+            "reward_baseline_decay",
+            "sleep_learning_scale",
+            "sleep_prune_threshold",
+            "weight_limit",
+        ):
+            _finite_float(getattr(self, name), name)
+        if self.learning_rate < 0.0:
+            raise ValueError("learning_rate must be >= 0")
+        if self.reward_learning_rate < 0.0:
+            raise ValueError("reward_learning_rate must be >= 0")
+        if self.sleep_learning_scale < 0.0:
+            raise ValueError("sleep_learning_scale must be >= 0")
+        if self.sleep_prune_threshold < 0.0:
+            raise ValueError("sleep_prune_threshold must be >= 0")
+        if self.weight_limit <= 0.0:
+            raise ValueError("weight_limit must be > 0")
         if not 0.0 < self.eligibility_decay <= 1.0:
             raise ValueError("eligibility_decay must be in (0, 1]")
         if not 0.0 < self.reward_baseline_decay < 1.0:
@@ -90,21 +120,21 @@ class Experience:
     def from_dict(cls, data: dict) -> "Experience":
         return cls(
             observation=[
-                float(x)
+                _finite_float(x, "observation")
                 for x in data["observation"]
             ],
             target=(
                 None
                 if data.get("target") is None
                 else [
-                    float(x)
+                    _finite_float(x, "target")
                     for x in data["target"]
                 ]
             ),
             reward=(
                 None
                 if data.get("reward") is None
-                else float(data["reward"])
+                else _finite_float(data["reward"], "reward")
             ),
             source=str(data.get("source", "host")),
             tag=str(data.get("tag", "")),
@@ -234,7 +264,7 @@ class AXMBrain:
         name: str,
     ) -> list[float]:
         vec = [
-            float(v)
+            _finite_float(v, name)
             for v in values
         ]
         if len(vec) != size:
@@ -499,6 +529,7 @@ class AXMBrain:
         self,
         reward: float,
     ) -> None:
+        reward = _finite_float(reward, "reward")
         cfg = self.config
         advantage = (
             reward
@@ -768,7 +799,7 @@ class AXMBrain:
                 name,
                 [
                     [
-                        float(v)
+                        _finite_float(v, name)
                         for v in row
                     ]
                     for row
@@ -785,13 +816,14 @@ class AXMBrain:
                 brain,
                 name,
                 [
-                    float(v)
+                    _finite_float(v, name)
                     for v
                     in state[name]
                 ],
             )
-        brain.reward_baseline = float(
-            state["reward_baseline"]
+        brain.reward_baseline = _finite_float(
+            state["reward_baseline"],
+            "reward_baseline",
         )
         brain.replay = [
             Experience.from_dict(x)
