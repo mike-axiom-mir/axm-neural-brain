@@ -1,0 +1,12 @@
+test_learned_selection_against_controls_on_disjoint_instances (test_innovation_evidence.InnovationEvidenceTests.test_learned_selection_against_controls_on_disjoint_instances) ... ok
+test_checkpoint_restore_preserves_future_trajectory (test_learning_evidence.LearningEvidenceTests.test_checkpoint_restore_preserves_future_trajectory) ... ok
+test_identical_replay_is_deterministic (test_learning_evidence.LearningEvidenceTests.test_identical_replay_is_deterministic) ... ok
+test_interference_probe_measures_retest_delta (test_learning_evidence.LearningEvidenceTests.test_interference_probe_measures_retest_delta) ... ok
+test_replay_has_behavioral_value_against_no_replay_control (test_learning_evidence.LearningEvidenceTests.test_replay_has_behavioral_value_against_no_replay_control) ... ok
+test_reward_causes_retained_behavior_change_not_only_weight_drift (test_learning_evidence.LearningEvidenceTests.test_reward_causes_retained_behavior_change_not_only_weight_drift) ... ok
+test_supervised_behavior_change_is_retained_after_restore (test_learning_evidence.LearningEvidenceTests.test_supervised_behavior_change_is_retained_after_restore) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 17.054s
+
+OK

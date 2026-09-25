@@ -1,0 +1,30 @@
+{
+  "schema": "axm.verification/v1",
+  "timestamp_utc": "2026-09-25T21:21:18.151767+00:00",
+  "base_commit": "eb54a9c152bea7a75cc86b8825ed7fb019a5e194",
+  "network_commit": "0dc91d6b0324fc2dec2173c73b9e3310e945a254",
+  "python": "3.12.14",
+  "platform": "Linux-6.18.44-x86_64-with-glibc2.39",
+  "results": {
+    "core": 48,
+    "lineage": 27,
+    "integration": 8,
+    "evaluation": 7
+  },
+  "commands": [
+    "python -m unittest discover -s neural/axm_brain/tests -v",
+    "python -m unittest discover -s tests -v",
+    "PYTHONPATH=.:../axm-neural-network/src python -m unittest discover -s integration -v",
+    "python -m unittest discover -s evaluation -v"
+  ],
+  "sources": {
+    "neural/axm_brain/simulation_session.py": "b9409458d6c25722de76de370e3a0dc5b84c2ae16bc9e77c485d3e838f3dc4a3",
+    "integration/test_simulation_session.py": "2954aa84cfc30fb1e7f3abb9f5675956797eb9ea8e0f561333d7a48511a9e5a3",
+    ".github/workflows/neural-microsimulation.yml": "953c30f9fc26a02e1267b2514e976ad2220f3d751357e3d0d172cd810cd8633b"
+  },
+  "limits": [
+    "Error-guided curriculum is a scheduling heuristic, not a trained neural meta-selector.",
+    "Snapshots have structural/chain verification; reproduce() reruns causal learning.",
+    "Host code and filesystem persistence are outside the library module."
+  ]
+}

@@ -1,0 +1,13 @@
+test_direct_experience_improves_unseen_seeds_and_retains_state (test_micro_learning.DirectSimulationLearningTests.test_direct_experience_improves_unseen_seeds_and_retains_state) ... ok
+test_overlap_and_budget_fail_without_parent_mutation (test_micro_learning.DirectSimulationLearningTests.test_overlap_and_budget_fail_without_parent_mutation) ... ok
+test_repeat_preserves_trace_and_learned_state (test_micro_learning.DirectSimulationLearningTests.test_repeat_preserves_trace_and_learned_state) ... ok
+test_bad_late_transition_rolls_back_the_complete_call (test_simulation_session.SimulationSessionTests.test_bad_late_transition_rolls_back_the_complete_call) ... ok
+test_budget_overlap_and_dimensions_fail_before_learning (test_simulation_session.SimulationSessionTests.test_budget_overlap_and_dimensions_fail_before_learning) ... ok
+test_held_out_changes_never_change_training_choices_or_weights (test_simulation_session.SimulationSessionTests.test_held_out_changes_never_change_training_choices_or_weights) ... ok
+test_json_resume_matches_uninterrupted_for_every_policy (test_simulation_session.SimulationSessionTests.test_json_resume_matches_uninterrupted_for_every_policy) ... ok
+test_rehashed_scheduler_accounting_and_provider_changes_rejected (test_simulation_session.SimulationSessionTests.test_rehashed_scheduler_accounting_and_provider_changes_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 2.084s
+
+OK

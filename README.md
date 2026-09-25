@@ -52,3 +52,6 @@ WALDO remains an independent comparison/fallback and is not absorbed into this r
 Truth before story. Agency / non-domination. Continuity. Wisdom before speed.
 
 Required Notice: Copyright 2026 Mike - Axiom/Mir.
+
+[Persistent simulation sessions](SIMULATION_SESSIONS.md) retain the learner,
+curriculum and episode history across restart and accept declared provider dimensions.
