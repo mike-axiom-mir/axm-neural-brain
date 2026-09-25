@@ -16,6 +16,10 @@ AXM Neural Brain is an active AXM build-and-test target for creating an AXM-owne
 - Later connect the brain beneath AXM software through explicit experience/action bridges.
 - Let each software body expose its own meaningful experience paths rather than pretending every application has the same nervous system.
 
+## Research
+
+- [Neural Substrate + Hybrid Architecture Findings](research/NEURAL_SUBSTRATE_HYBRID_FINDINGS.md) — PyTorch/JAX/MLX boundaries, external precedents, prompt-to-action provenance, Genesis semantics, reproducibility controls, and a staged path toward an optional AXM-owned minimal neural substrate.
+
 ## Evidence boundary
 
 No claim of successful learning is earned by architecture, changing files, changing weights, or a training loop merely running.
