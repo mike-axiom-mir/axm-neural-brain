@@ -158,6 +158,166 @@ Its first useful milestone is not "invent a new brain." It is something smaller 
 
 That result would demonstrate learned improvement in the **search process** itself.
 
+## Simulation as a native learning organ
+
+The innovation loop becomes substantially more interesting if simulation is not treated only as an external benchmark after a candidate has been built.
+
+A machine can use many small simulations as a **direct source of experience**:
+
+```text
+current learned state
+-> select or construct a bounded micro-simulation
+-> predict / choose / act
+-> run state transition
+-> observe consequence
+-> encode the result as experience
+-> update learned state
+-> choose the next simulation differently
+-> repeat
+```
+
+The important research hypothesis is not that AXM already runs millions of useful simulations. The hypothesis is that **machine-scale simulation throughput can become a native learning channel**, with the achieved rate measured rather than assumed.
+
+A micro-simulation does not need graphics, a full game engine, or a realistic world. It can be as small as:
+
+- one state transition;
+- one routing decision;
+- one memory-retrieval conflict;
+- one action/consequence pair;
+- one candidate neural mechanism under one controlled condition;
+- one deterministic software workflow with varied inputs;
+- one small procedural environment.
+
+This makes simulation closer to a synthetic nervous system than a post-hoc test harness.
+
+### Keep experience sources distinct
+
+Simulation can teach useful structure while also teaching the wrong structure if its world is incomplete.
+
+The brain therefore needs to retain where an experience came from:
+
+```text
+experience_source =
+  external_observation
+  deterministic_simulation
+  learned_world_model
+  replay
+  imported_dataset
+```
+
+A simulated result must never silently become evidence that the same thing happened externally.
+
+This source boundary also makes transfer measurable:
+
+```text
+learn in simulation
+-> test on unseen simulations
+-> test on external / higher-fidelity conditions
+-> measure what transferred and what failed
+```
+
+### Three simulation layers
+
+The research direction can begin with the cheapest and most inspectable layer.
+
+#### 1. Deterministic micro-simulations
+
+Explicit state-transition rules with reproducible seeds.
+
+These are useful for proving the complete learning loop because a failed result can be reconstructed exactly.
+
+#### 2. Procedural simulation families
+
+One simulator can generate many related situations by varying initial state, constraints, topology, noise, opponents, resources, or other declared factors.
+
+This lets the learner experience a distribution instead of memorizing one fixed scenario.
+
+#### 3. Learned world-model rollouts
+
+A later neural model may learn to predict possible state transitions and generate internal rollouts.
+
+These are potentially powerful but must remain labeled as model-produced predictions rather than external facts.
+
+The learned simulator itself can later become an object of experimentation: compare its predictions against grounded outcomes, find where it is weak, and improve it.
+
+### Simulation-selection learning
+
+The deeper loop is not merely "run more simulations."
+
+It is:
+
+> learn which simulation is worth running next.
+
+A meta-learner can observe:
+
+- current uncertainty;
+- recurring failures;
+- areas with little experience;
+- disagreement between candidate mechanisms;
+- earlier simulations that produced large learning gains;
+- simulations whose lessons transferred well to held-out conditions.
+
+It can then choose a next experiment expected to be informative.
+
+The claim to earn is narrower than "machine curiosity" or "autonomous science":
+
+> Given a fixed simulation budget, learned simulation selection improves later held-out behavior compared with random or fixed simulation selection.
+
+### Neural innovation through simulation
+
+Candidate neural changes can use the same fabric:
+
+```text
+parent checkpoint
+-> candidate neural change
+-> isolated descendant
+-> many bounded micro-simulations
+-> direct learning inside descendant
+-> held-out comparison
+-> archive causal evidence
+-> explicit adoption decision
+```
+
+This changes the role of simulation from evaluator to **experience generator**.
+
+A useful candidate may emerge not because a single architecture scored higher immediately, but because it learned more effectively across a family of simulated experiences.
+
+### Resource truth
+
+Simulation is not free.
+
+The system should measure:
+
+- simulations or state transitions per second;
+- CPU/GPU/RAM cost;
+- learner-update cost;
+- storage written;
+- wall-clock time;
+- duplicate/uninformative simulation rate;
+- transfer to held-out conditions.
+
+A claim such as "millions of simulations" is meaningful only when the simulation unit and measured hardware throughput are stated.
+
+The goal is not maximal simulation count. It is useful experience per available compute.
+
+### Simulation can become a method of thinking
+
+The long-term possibility is a brain that does not wait for all useful experience to arrive from the external world.
+
+It can learn a bounded pattern like:
+
+```text
+notice uncertainty
+-> construct possible situation
+-> simulate consequence
+-> compare possibilities
+-> choose external action
+-> observe reality
+-> update both task knowledge and simulation quality
+```
+
+If this is eventually demonstrated, simulation is no longer merely a training utility around the brain. It has become part of the brain's learned cognitive process.
+
 ## Candidate experiment contract
 
 Every innovation attempt should be reconstructible from an explicit experiment record.
