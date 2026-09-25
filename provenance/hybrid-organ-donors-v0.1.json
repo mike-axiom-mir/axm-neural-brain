@@ -1,0 +1,23 @@
+{
+  "schema": "axm.hybrid-organ-provenance/v1",
+  "source_repo": "mike-axiom-mir/axm-organ-fabric",
+  "source_commit": "536f3f6041047f7ead8ba1511731344b72e82d4e",
+  "adapted_patterns": [
+    {
+      "path": "intakes/universal-creation-organs/organs/AXM-01-PROVENANCE-O-002-evidence-collector.json",
+      "blob_sha": "f77d4e8ffd7c826ee27f47ddd8ae7c528e8e1bd8",
+      "use": "explicit evidence-bearing organ metadata"
+    },
+    {
+      "path": "intakes/universal-creation-organs/organs/AXM-03-TIME-STATE-EVENT-O-004-state-machine-runtime.json",
+      "blob_sha": "b03fe7d756cfbd9b756fb8457b780befd20fe3ec",
+      "use": "state transition and evidence separation pattern"
+    },
+    {
+      "path": "intakes/universal-creation-organs/executable-organs/axm.foundation.identity-registry-1.0.0.json",
+      "blob_sha": "052789c44c74136d47973007004bef6b8346bd36",
+      "use": "schema/id/version/purpose/provenance/limitations/fixtures shape"
+    }
+  ],
+  "boundary": "Patterns only. No UC execution authority, tool access, network access, shell access, or filesystem authority is imported."
+}

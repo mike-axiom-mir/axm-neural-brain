@@ -1,0 +1,100 @@
+{
+  "schema": "axm.neural-growth-verification/v1",
+  "date_utc": "2026-09-25T20:42:40.688008+00:00",
+  "python": "3.12.14",
+  "platform": "Linux",
+  "checks": [
+    {
+      "label": "core",
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "neural/axm_brain/tests",
+        "-v"
+      ],
+      "exit_code": 0,
+      "log": "verification/2026-09-25-neural-growth/core.log"
+    },
+    {
+      "label": "lineage",
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ],
+      "exit_code": 0,
+      "log": "verification/2026-09-25-neural-growth/lineage.log"
+    },
+    {
+      "label": "evaluation",
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "evaluation",
+        "-v"
+      ],
+      "exit_code": 0,
+      "log": "verification/2026-09-25-neural-growth/evaluation.log"
+    },
+    {
+      "label": "micro-integration",
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "integration",
+        "-v"
+      ],
+      "log": "verification/2026-09-25-neural-growth/micro-integration.log",
+      "exit_code": 0
+    }
+  ],
+  "source_sha256": {
+    "axm_persistence/__init__.py": "2b490dcb6e959ba03ed55e65493de2972eb256c34b51b8aa93a0190c59b69c92",
+    "axm_persistence/core.py": "c0b40b8b21471e89c9bb02ce3f05ba195dc98ae980f497a82c989dc00ce268fc",
+    "axm_persistence/neural_adapter.py": "b0bd2452a31b0dbb7163ced0f92426630f8141d095aca5428b79e1ae79ff5ecf",
+    "evaluation/innovation_benchmark.py": "dccc842525d36df33caedaf1713c142ca5314eb8c3cab9ffdfd1468a99789e37",
+    "evaluation/test_innovation_evidence.py": "af037f0d67d5982ec68172b566bef12b5d95b1f87b9453f4bd9dc2b424296583",
+    "evaluation/test_learning_evidence.py": "63efbb410ec0e5a8f6e1ac04d72dc2ea9f94f4ee0e31b36da16f6fae742ed207",
+    "evaluation/verify_innovation.py": "3170ecdc9506af3855abad27ee459bb0133b3bf6a6030ae583108520a01c621f",
+    "integration/run_micro_evidence.py": "c2369c5289f1474038fbea5958b26dd3ee045505a70389e8987806f105ae8d5c",
+    "integration/test_micro_learning.py": "ab71d942f9ede3847bbec15fdaa6469a06306d8995983aee01c0edf3157d0e08",
+    "neural/axm_brain/__init__.py": "775d48d6b9d8ba3b8b2c614ab1fbe88d8a10f93d12f75c5f1c2f3e50f65dc069",
+    "neural/axm_brain/analyzer.py": "70b0caba083c404d44c06ff47860690cd9c94995ac4569f0f68d4509da4fa31c",
+    "neural/axm_brain/contract.py": "c93e66885c6f55aa7f954fd9030f329858f4c9e31eb6bdfa1fc0c4fbdf3f1f39",
+    "neural/axm_brain/core.py": "4ee41683b404f475b04fd57ad884588b617cd206e7e88c701047c634e64156b1",
+    "neural/axm_brain/hybrid.py": "2b8994a7fbf8abcf79e66b407cca6408c7573bf879b0c2bf3934877fec22b3bd",
+    "neural/axm_brain/innovation.py": "036a8e18d5c11943bf6d0a16020a9fc66dd5db9f1f5ed39dea92ef72fea080d8",
+    "neural/axm_brain/roots.py": "973a5ec18c300eb4f682381a49740ba8925fe2ebc3bffaf3f80e582e84fd75b1",
+    "neural/axm_brain/simulation.py": "527cb78394691158406d701c5defa3bed558cb9da1d964b208844e80cd91e105",
+    "neural/axm_brain/state.py": "0c532734e066287e85533a060952bd8a2e638257872901abf31d991a46f805b3",
+    "neural/axm_brain/taxonomy.py": "81f8f74aee79c32af24b13329463f32a1adbb36bdc44f9ee239dfe796b5285a8",
+    "neural/axm_brain/tests/test_analyzer.py": "cf1b90f2f5d6726a9bb28e98131468e37b4b6b9e74d20e9fe6f8be20a24be1f1",
+    "neural/axm_brain/tests/test_brain.py": "8fe9a423c2900c707abc093f92d24e4331044ffcc910cb44a81c03a1d9457fd4",
+    "neural/axm_brain/tests/test_contract.py": "f8e3c0e1dacbb6e663475bc8e9bdd2553705544b4b7cb24d4abcfe326efbe04d",
+    "neural/axm_brain/tests/test_extraction_boundaries.py": "47e91874e4bbe91f72c63bc0293941a57922457fc5f31f901c88ed971982c737",
+    "neural/axm_brain/tests/test_finite_boundary.py": "f9c9346e9eafec63936f573d11d7fff894d73c8b1aa9e6aeceab29b187ffd333",
+    "neural/axm_brain/tests/test_hybrid.py": "c481fe65d5a69c769e1d4f8c64f2bb40b2bbb17577719a97ef5ae60396fb8244",
+    "neural/axm_brain/tests/test_innovation.py": "4f2c4aaec399d6e8c66277f68a81e15cf6efaf9dcf909a23295162a738c97885",
+    "neural/axm_brain/tests/test_state_integrity.py": "f0179694c02c2492e02afc7c6f0980b23892e462e21796e95c11148efd9b40dc",
+    "tests/test_persistence_lineage.py": "0c2fb9fc64877665f8ec1836f51db83d16baa177ecc0d28f1de4e9ba3f22d6d3",
+    "verification/hybrid_probe.py": "928c4a7ed9159d172c6c142da35c371c0a5e508f9a1561a6806d7670279e53a1"
+  },
+  "merge_authorization": "Mike requested integration within Truth, Agency, Continuity and Wisdom on 2026-09-25.",
+  "limits": [
+    "No native Windows, UC runtime, GPU or open-ended invention claim.",
+    "Performance evidence covers the declared synthetic tasks only."
+  ]
+}

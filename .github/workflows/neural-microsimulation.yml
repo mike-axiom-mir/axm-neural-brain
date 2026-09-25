@@ -1,0 +1,33 @@
+name: Direct micro-simulation learning
+
+on:
+  push:
+    paths:
+      - 'neural/axm_brain/**'
+      - 'integration/**'
+      - '.github/workflows/neural-microsimulation.yml'
+  pull_request:
+    paths:
+      - 'neural/axm_brain/**'
+      - 'integration/**'
+      - '.github/workflows/neural-microsimulation.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  direct-learning:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Checkout exact micro-simulation provider
+        uses: actions/checkout@v4
+        with:
+          repository: mike-axiom-mir/axm-neural-network
+          ref: fbb9a46427d6f2ae91cda3d3c03e168dcd8844b9
+          path: neural-network
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Verify direct learning, retained behavior, replay and parent preservation
+        run: PYTHONPATH=.:neural-network/src python -m unittest discover -s integration -v

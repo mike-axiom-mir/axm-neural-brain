@@ -1,0 +1,27 @@
+name: Neural core verification
+
+on:
+  push:
+    paths:
+      - 'neural/axm_brain/**'
+      - 'provenance/direct-brain-donor-v0.1.json'
+      - '.github/workflows/neural-core.yml'
+  pull_request:
+    paths:
+      - 'neural/axm_brain/**'
+      - 'provenance/direct-brain-donor-v0.1.json'
+      - '.github/workflows/neural-core.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run extracted neural core tests
+        run: python -m unittest discover -s neural/axm_brain/tests -v

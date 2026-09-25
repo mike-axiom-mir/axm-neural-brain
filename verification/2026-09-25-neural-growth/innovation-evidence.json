@@ -1,0 +1,961 @@
+{
+  "schema": "axm.innovation-evidence/v1",
+  "reports": [
+    {
+      "schema": "axm.innovation-benchmark/v1",
+      "selector_seed": 19,
+      "environment": {
+        "python": "3.12.14",
+        "implementation": "CPython",
+        "platform": "Linux"
+      },
+      "training_tasks": 12,
+      "evaluation_tasks": 12,
+      "feature_names": [
+        "observed_target_roughness",
+        "parent_training_error"
+      ],
+      "operators": [
+        {
+          "name": "conservative",
+          "changes": {
+            "learning_rate": 0.003
+          },
+          "mechanism_id": "72bcbadcb5c46dc6afe0415dfdf1b31fc92732f7c186dcf5b471026eae731fa5"
+        },
+        {
+          "name": "ordinary",
+          "changes": {
+            "learning_rate": 0.03
+          },
+          "mechanism_id": "4bdaec6abe338f9e0725dc3e442b13daaa02bf014154f0dc8e9cdd4fcccbf8cc"
+        },
+        {
+          "name": "rapid-adaptation",
+          "changes": {
+            "learning_rate": 0.3
+          },
+          "mechanism_id": "94d7b4de890ecce8848604075f1124463d6899a1c3a682526aa668c3d78d07ac"
+        }
+      ],
+      "selector_training_objective": "validation MSE only",
+      "evaluation_metric": "held-out MSE",
+      "training_seed_range": [
+        100,
+        105
+      ],
+      "evaluation_seed_range": [
+        1000,
+        1005
+      ],
+      "metrics": {
+        "learned_mse": 0.006732226543075463,
+        "genesis_selector_mse": 0.2502115052475526,
+        "fixed_mse": 0.038287526944588056,
+        "random_mse": 0.031290201257294425,
+        "uniform_random_expected_mse": 0.26517166672265174,
+        "exhaustive_oracle_mse": 0.005452397574181321,
+        "beats_best_training_fixed": true,
+        "beats_random_expectation": true,
+        "beats_untrained_selector": true
+      },
+      "rows": [
+        {
+          "task": "evaluation/shift/1000",
+          "condition": "shift",
+          "features": [
+            -0.7613433825086416,
+            0.3777721425631544
+          ],
+          "choice": "rapid-adaptation",
+          "record_sha256": "08db42e474daa9d8b8577f6ac4427f03533476c0d12ff1b783b9a6acc23403cd",
+          "learned_mse": 0.015697169351763154,
+          "genesis_selector_mse": 0.46486980445950843,
+          "fixed_mse": 0.015697169351763154,
+          "random_mse": 0.015697169351763154,
+          "uniform_random_expected_mse": 0.4340024275116961,
+          "exhaustive_oracle_mse": 0.015697169351763154,
+          "regression_delta": 1.1180371868825236,
+          "supervised_updates": 42,
+          "parent_unchanged": true,
+          "restart_choice_equal": true
+        },
+        {
+          "task": "evaluation/noisy-source/1000",
+          "condition": "noisy-source",
+          "features": [
+            0.6331489347737818,
+            -0.1711430890045969
+          ],
+          "choice": "conservative",
+          "record_sha256": "efccbadbbb45630342a6e81e5a9cd5551530f8ffda25a310ad0e615979b86f34",
+          "learned_mse": 0.0009298574864276109,
+          "genesis_selector_mse": 0.0009298574864276109,
+          "fixed_mse": 0.10529122927560171,
+          "random_mse": 0.0009298574864276109,
+          "uniform_random_expected_mse": 0.04663372451743583,
+          "exhaustive_oracle_mse": 0.0009298574864276109,
+          "regression_delta": 0.0009847161761521812,
+          "supervised_updates": 42,
+          "parent_unchanged": true,
+          "restart_choice_equal": true
+        },
+        {
+          "task": "evaluation/shift/1001",
+          "condition": "shift",
+          "features": [
+            -0.7768435990303444,
+            0.3953195458743872
+          ],
+          "choice": "rapid-adaptation",
+          "record_sha256": "757a3c48cb6699620102d8893320be5ff4b3050fe6d13181019fffff248f6e5a",
+          "learned_mse": 0.005991768430425869,
+          "genesis_selector_mse": 0.9034090978717272,
+          "fixed_mse": 0.005991768430425869,
+          "random_mse": 0.005991768430425869,
+          "uniform_random_expected_mse": 0.7777229314981118,
+          "exhaustive_oracle_mse": 0.005991768430425869,
+          "regression_delta": 1.3175132407223624,
+          "supervised_updates": 42,
+          "parent_unchanged": true,
+          "restart_choice_equal": true
+        },
+        {
+          "task": "evaluation/noisy-source/1001",
+          "condition": "noisy-source",
+          "features": [
+            0.4744823801995741,
+            -0.14668980416086191
+          ],
+          "choice": "conservative",
+          "record_sha256": "bd5c739aafb7733a8cb5fa0c9f9d3acbad62dba8384357e714ea7a456ddae6d8",
+          "learned_mse": 0.0015427006808821015,
+          "genesis_selector_mse": 0.0015427006808821015,
+          "fixed_mse": 0.0859832806819931,
+          "random_mse": 0.0015427006808821015,
+          "uniform_random_expected_mse": 0.03290292667297832,
+          "exhaustive_oracle_mse": 0.0015427006808821015,
+          "regression_delta": 0.0004039890026389613,
+          "supervised_updates": 42,
+          "parent_unchanged": true,
+          "restart_choice_equal": true
+        },
+        {
+          "task": "evaluation/shift/1002",
+          "condition": "shift",
+          "features": [
+            -0.8192883394774647,
+            0.13450415239754154
+          ],
+          "choice": "rapid-adaptation",
+          "record_sha256": "261945bfcbf5a1a8179b7265a0e557b340a129b68464d0bd83c7d42cf7468840",
+          "learned_mse": 0.006792560878456049,
+          "genesis_selector_mse": 0.5121198249162572,
+          "fixed_mse": 0.006792560878456049,
+          "random_mse": 0.006792560878456049,
+          "uniform_random_expected_mse": 0.4951955244560465,
+          "exhaustive_oracle_mse": 0.006792560878456049,
+          "regression_delta": 0.9445695228829664,
+          "supervised_updates": 42,
+          "parent_unchanged": true,
+          "restart_choice_equal": true
+        },
+        {
+          "task": "evaluation/noisy-source/1002",
+          "condition": "noisy-source",
+          "features": [
+            0.2972806477798864,
+            -0.20420684516779092
+          ],
+          "choice": "conservative",
+          "record_sha256": "75c91ea429ba24d95456e1e796790a09df8d64b4b422f9f86753865e4cd782d8",
+          "learned_mse": 0.0009606009154919236,
+          "genesis_selector_mse": 0.0009606009154919236,
+          "fixed_mse": 0.12613338459367693,
+          "random_mse": 0.0009606009154919236,
+          "uniform_random_expected_mse": 0.04688703928904187,
+          "exhaustive_oracle_mse": 0.0009606009154919236,
+          "regression_delta": 0.00047263660609033246,
+          "supervised_updates": 42,
+          "parent_unchanged": true,
+          "restart_choice_equal": true
+        },
+        {
+          "task": "evaluation/shift/1003",
+          "condition": "shift",
+          "features": [
+            -0.7962310178410447,
+            0.3455837975848809
+          ],
+          "choice": "rapid-adaptation",
+          "record_sha256": "941322a5639b186f9b0b17b5772b9ac1e1d8654dde99fbaebcc040b68a9b88ab",
+          "learned_mse": 0.00025283287814215625,
+          "genesis_selector_mse": 0.24908334061858867,
+          "fixed_mse": 0.00025283287814215625,
+          "random_mse": 0.24908334061858867,
+          "uniform_random_expected_mse": 0.387802989102823,
+          "exhaustive_oracle_mse": 0.00025283287814215625,
+          "regression_delta": 1.0874077294136357,
+          "supervised_updates": 42,
+          "parent_unchanged": true,
+          "restart_choice_equal": true
+        },
+        {
+          "task": "evaluation/noisy-source/1003",
+          "condition": "noisy-source",
+          "features": [
+            0.0871662431325464,
+            -0.2788772952879146
+          ],
+          "choice": "conservative",
+          "record_sha256": "16406baec883f27747c6704e145b4d781acc0e55c5345fed789f7302ac3f9af4",
+          "learned_mse": 0.001137162313693033,
+          "genesis_selector_mse": 0.034141295390167546,
+          "fixed_mse": 0.034141295390167546,
+          "random_mse": 0.015802038740892345,
+          "uniform_random_expected_mse": 0.017026832148250976,
+          "exhaustive_oracle_mse": 0.001137162313693033,
+          "regression_delta": 0.0004978201633251324,
+          "supervised_updates": 42,
+          "parent_unchanged": true,
+          "restart_choice_equal": true
+        },
+        {
+          "task": "evaluation/shift/1004",
+          "condition": "shift",
+          "features": [
+            -0.8465921447370268,
+            0.38654350012986716
+          ],
+          "choice": "rapid-adaptation",
+          "record_sha256": "3987850420a305dbddbcf237654bffddd50ccf3cfd67563a73845b29b05016a1",
+          "learned_mse": 0.026132604503763243,
+          "genesis_selector_mse": 0.43395226536428805,
+          "fixed_mse": 0.026132604503763243,
+          "random_mse": 0.026132604503763243,
+          "uniform_random_expected_mse": 0.3949388750403903,
+          "exhaustive_oracle_mse": 0.026132604503763243,
+          "regression_delta": 0.8230596876560456,
+          "supervised_updates": 42,
+          "parent_unchanged": true,
+          "restart_choice_equal": true
+        },
+        {
+          "task": "evaluation/noisy-source/1004",
+          "condition": "noisy-source",
+          "features": [
+            0.3509380480310076,
+            -0.11285775274069954
+          ],
+          "choice": "conservative",
+          "record_sha256": "f183ac9c33b4195c7bda8cfb38eaaccd6c5be1bf5e652b9d176a6ce219c7e834",
+          "learned_mse": 0.0014813807223246485,
+          "genesis_selector_mse": 0.0014813807223246485,
+          "fixed_mse": 0.033166116995531125,
+          "random_mse": 0.048039640752036115,
+          "uniform_random_expected_mse": 0.02756237948996396,
+          "exhaustive_oracle_mse": 0.0014813807223246485,
+          "regression_delta": 0.001455427891954948,
+          "supervised_updates": 42,
+          "parent_unchanged": true,
+          "restart_choice_equal": true
+        },
+        {
+          "task": "evaluation/shift/1005",
+          "condition": "shift",
+          "features": [
+            -0.7890254184150414,
+            0.35681238554993266
+          ],
+          "choice": "rapid-adaptation",
+          "record_sha256": "b2c96f708d6a5c217546ad31f43e6dc394381a41599764b997b0432fbd233b01",
+          "learned_mse": 0.0036862583604391546,
+          "genesis_selector_mse": 0.38386607254987104,
+          "fixed_mse": 0.0036862583604391546,
+          "random_mse": 0.0036862583604391546,
+          "uniform_random_expected_mse": 0.5139515848435057,
+          "exhaustive_oracle_mse": 0.0036862583604391546,
+          "regression_delta": 0.9534812055628087,
+          "supervised_updates": 42,
+          "parent_unchanged": true,
+          "restart_choice_equal": true
+        },
+        {
+          "task": "evaluation/noisy-source/1005",
+          "condition": "noisy-source",
+          "features": [
+            -0.22910543008200512,
+            -0.2914152349742408
+          ],
+          "choice": "rapid-adaptation",
+          "record_sha256": "4f3dc900cf37ecaf759248ff66efe354b0656c4939d7f10236b177ecf17df242",
+          "learned_mse": 0.016181821995096615,
+          "genesis_selector_mse": 0.016181821995096615,
+          "fixed_mse": 0.016181821995096615,
+          "random_mse": 0.0008238743683668983,
+          "uniform_random_expected_mse": 0.007432766101576883,
+          "exhaustive_oracle_mse": 0.0008238743683668983,
+          "regression_delta": 0.01577757682933445,
+          "supervised_updates": 42,
+          "parent_unchanged": true,
+          "restart_choice_equal": true
+        }
+      ],
+      "experiment_reproduction_exact": true,
+      "archive_restore_exact": true,
+      "archive_sha256": "2ee5076ba0eb9b0921cf3c51e8d877448ba3b9433157d286d0a77f84f2745c8f",
+      "adoption_state": "archive-only",
+      "automatic_adoption": false,
+      "limits": [
+        "Synthetic supervised scalar functions and three learning-rate operators only.",
+        "Held-out task instances, not unseen task families or UC/Windows validation.",
+        "Not open-ended invention, general intelligence, a latency benchmark, or automatic parent replacement.",
+        "Regressions remain separate; lower task error does not erase forgetting costs."
+      ],
+      "selector_genesis_sha256": "1360c6b28ae6aa028d3f9ae6248e5a3dc4bcf5bd02c8925c31ca778762e159f8",
+      "selector_after_sha256": "b401d13a332d7f02f0150303a6e615154be3e7db7db062dcb318e6ac5e024be4"
+    },
+    {
+      "schema": "axm.innovation-benchmark/v1",
+      "selector_seed": 29,
+      "environment": {
+        "python": "3.12.14",
+        "implementation": "CPython",
+        "platform": "Linux"
+      },
+      "training_tasks": 12,
+      "evaluation_tasks": 12,
+      "feature_names": [
+        "observed_target_roughness",
+        "parent_training_error"
+      ],
+      "operators": [
+        {
+          "name": "conservative",
+          "changes": {
+            "learning_rate": 0.003
+          },
+          "mechanism_id": "72bcbadcb5c46dc6afe0415dfdf1b31fc92732f7c186dcf5b471026eae731fa5"
+        },
+        {
+          "name": "ordinary",
+          "changes": {
+            "learning_rate": 0.03
+          },
+          "mechanism_id": "4bdaec6abe338f9e0725dc3e442b13daaa02bf014154f0dc8e9cdd4fcccbf8cc"
+        },
+        {
+          "name": "rapid-adaptation",
+          "changes": {
+            "learning_rate": 0.3
+          },
+          "mechanism_id": "94d7b4de890ecce8848604075f1124463d6899a1c3a682526aa668c3d78d07ac"
+        }
+      ],
+      "selector_training_objective": "validation MSE only",
+      "evaluation_metric": "held-out MSE",
+      "training_seed_range": [
+        200,
+        205
+      ],
+      "evaluation_seed_range": [
+        2000,
+        2005
+      ],
+      "metrics": {
+        "learned_mse": 0.01111463256522551,
+        "genesis_selector_mse": 0.06636563486330395,
+        "fixed_mse": 0.016477148113629245,
+        "random_mse": 0.1343559795861774,
+        "uniform_random_expected_mse": 0.19081776552253116,
+        "exhaustive_oracle_mse": 0.0018216702367985858,
+        "beats_best_training_fixed": true,
+        "beats_random_expectation": true,
+        "beats_untrained_selector": true
+      },
+      "rows": [
+        {
+          "task": "evaluation/shift/2000",
+          "condition": "shift",
+          "features": [
+            -0.8197867695227616,
+            0.5204783444304231
+          ],
+          "choice": "rapid-adaptation",
+          "record_sha256": "6845855364011af07671f6faa21188535e83cfdfa8c2338fced051c80cf2bf9e",
+          "learned_mse": 0.001110620898398603,
+          "genesis_selector_mse": 0.001110620898398603,
+          "fixed_mse": 0.001110620898398603,
+          "random_mse": 0.001110620898398603,
+          "uniform_random_expected_mse": 0.3324783719262564,
+          "exhaustive_oracle_mse": 0.001110620898398603,
+          "regression_delta": 0.9715672166589782,
+          "supervised_updates": 42,
+          "parent_unchanged": true,
+          "restart_choice_equal": true
+        },
+        {
+          "task": "evaluation/noisy-source/2000",
+          "condition": "noisy-source",
+          "features": [
+            -0.11416966583719002,
+            -0.30101033670952015
+          ],
+          "choice": "rapid-adaptation",
+          "record_sha256": "5a61c45e1e0452fe70d549dd143ae20c7fab019fa6759913cbf1428273f25bf5",
+          "learned_mse": 0.06364889618479413,
+          "genesis_selector_mse": 0.001137250178303293,
+          "fixed_mse": 0.06364889618479413,
+          "random_mse": 0.001137250178303293,
+          "uniform_random_expected_mse": 0.028127855792084332,
+          "exhaustive_oracle_mse": 0.001137250178303293,
+          "regression_delta": 0.05997676265929782,
+          "supervised_updates": 42,
+          "parent_unchanged": true,
+          "restart_choice_equal": true
+        },
+        {
+          "task": "evaluation/shift/2001",
+          "condition": "shift",
+          "features": [
+            -0.7828473747581512,
+            0.3532238312949977
+          ],
+          "choice": "rapid-adaptation",
+          "record_sha256": "c4292a1c8239ce2f083eb60984aeae71f1364efa8fdd5bd1e9ae5b7a988c80ac",
+          "learned_mse": 0.0008536826584596679,
+          "genesis_selector_mse": 0.36387495367581396,
+          "fixed_mse": 0.0008536826584596679,
+          "random_mse": 0.36387495367581396,
+          "uniform_random_expected_mse": 0.4162886102685148,
+          "exhaustive_oracle_mse": 0.0008536826584596679,
+          "regression_delta": 1.1519073495270216,
+          "supervised_updates": 42,
+          "parent_unchanged": true,
+          "restart_choice_equal": true
+        },
+        {
+          "task": "evaluation/noisy-source/2001",
+          "condition": "noisy-source",
+          "features": [
+            0.33746504231323105,
+            -0.27056542363642216
+          ],
+          "choice": "conservative",
+          "record_sha256": "9fe6ecb0e711cd722fbcf1849e9ac317eae4bbae32b7c1b80ee31aa26a8e7627",
+          "learned_mse": 0.0009266177774958559,
+          "genesis_selector_mse": 0.0009266177774958559,
+          "fixed_mse": 0.00735543245201939,
+          "random_mse": 0.00735543245201939,
+          "uniform_random_expected_mse": 0.003735395616056065,
+          "exhaustive_oracle_mse": 0.0009266177774958559,
+          "regression_delta": -7.185458246888291e-06,
+          "supervised_updates": 42,
+          "parent_unchanged": true,
+          "restart_choice_equal": true
+        },
+        {
+          "task": "evaluation/shift/2002",
+          "condition": "shift",
+          "features": [
+            -0.7574001932540073,
+            0.9750305683278415
+          ],
+          "choice": "rapid-adaptation",
+          "record_sha256": "89798de0d56ff95baa83f61b52ad56849b1edbfb5d12feae7cb45fee9ba24377",
+          "learned_mse": 0.0005809918524303457,
+          "genesis_selector_mse": 0.0005809918524303457,
+          "fixed_mse": 0.0005809918524303457,
+          "random_mse": 0.0005809918524303457,
+          "uniform_random_expected_mse": 0.5069657341309811,
+          "exhaustive_oracle_mse": 0.0005809918524303457,
+          "regression_delta": 1.3397259037367233,
+          "supervised_updates": 42,
+          "parent_unchanged": true,
+          "restart_choice_equal": true
+        },
+        {
+          "task": "evaluation/noisy-source/2002",
+          "condition": "noisy-source",
+          "features": [
+            -0.2831146778333693,
+            -0.31345928686523195
+          ],
+          "choice": "rapid-adaptation",
+          "record_sha256": "aeece22c20ee2823cfe70c8dc0f0ea6e1372f245411bb3ffb06cb6e0f010a526",
+          "learned_mse": 0.034229790043155524,
+          "genesis_selector_mse": 0.01225413426799882,
+          "fixed_mse": 0.034229790043155524,
+          "random_mse": 0.01225413426799882,
+          "uniform_random_expected_mse": 0.015826056950803132,
+          "exhaustive_oracle_mse": 0.0009942465412550604,
+          "regression_delta": 0.027578601890036927,
+          "supervised_updates": 42,
+          "parent_unchanged": true,
+          "restart_choice_equal": true
+        },
+        {
+          "task": "evaluation/shift/2003",
+          "condition": "shift",
+          "features": [
+            -0.8613426218938551,
+            0.06625048164730374
+          ],
+          "choice": "rapid-adaptation",
+          "record_sha256": "c08865d7d5b7163d19ad3e2e484fec21d06555d917dec2feb8561cd42bfc04af",
+          "learned_mse": 0.0006645746249739413,
+          "genesis_selector_mse": 0.1097934740028875,
+          "fixed_mse": 0.0006645746249739413,
+          "random_mse": 0.6320661054974461,
+          "uniform_random_expected_mse": 0.24750805137510254,
+          "exhaustive_oracle_mse": 0.0006645746249739413,
+          "regression_delta": 0.6356995168386413,
+          "supervised_updates": 42,
+          "parent_unchanged": true,
+          "restart_choice_equal": true
+        },
+        {
+          "task": "evaluation/noisy-source/2003",
+          "condition": "noisy-source",
+          "features": [
+            0.16892060585051438,
+            -0.2846147695214295
+          ],
+          "choice": "conservative",
+          "record_sha256": "fa552bb85f6b4524b4c28e88ca9e08b1ac0ea9f7922162e5af0a2ca6937045da",
+          "learned_mse": 0.0003009832030497671,
+          "genesis_selector_mse": 0.0003009832030497671,
+          "fixed_mse": 0.05698618675383466,
+          "random_mse": 0.05698618675383466,
+          "uniform_random_expected_mse": 0.023828050235786626,
+          "exhaustive_oracle_mse": 0.0003009832030497671,
+          "regression_delta": 0.00039043241703307216,
+          "supervised_updates": 42,
+          "parent_unchanged": true,
+          "restart_choice_equal": true
+        },
+        {
+          "task": "evaluation/shift/2004",
+          "condition": "shift",
+          "features": [
+            -0.8175154340338979,
+            0.3292369169424668
+          ],
+          "choice": "rapid-adaptation",
+          "record_sha256": "4ad11b992ce2e5bfa0ccb27352bafc59a1848a91ff879e73eba6c23780cebac4",
+          "learned_mse": 0.01365125884971374,
+          "genesis_selector_mse": 0.3022993243367653,
+          "fixed_mse": 0.01365125884971374,
+          "random_mse": 0.3022993243367653,
+          "uniform_random_expected_mse": 0.40338706652745815,
+          "exhaustive_oracle_mse": 0.01365125884971374,
+          "regression_delta": 0.8504795179089782,
+          "supervised_updates": 42,
+          "parent_unchanged": true,
+          "restart_choice_equal": true
+        },
+        {
+          "task": "evaluation/noisy-source/2004",
+          "condition": "noisy-source",
+          "features": [
+            0.23746738866441408,
+            -0.24280320438577802
+          ],
+          "choice": "conservative",
+          "record_sha256": "f6988490f48af4f2239a60b9a75ecb717d34d43525319760512d1c034abd6491",
+          "learned_mse": 0.0005739367081518212,
+          "genesis_selector_mse": 0.0005739367081518212,
+          "fixed_mse": 0.0018101050636882205,
+          "random_mse": 0.012120595662842522,
+          "uniform_random_expected_mse": 0.004834879144894188,
+          "exhaustive_oracle_mse": 0.0005739367081518212,
+          "regression_delta": 0.0002872777314872032,
+          "supervised_updates": 42,
+          "parent_unchanged": true,
+          "restart_choice_equal": true
+        },
+        {
+          "task": "evaluation/shift/2005",
+          "condition": "shift",
+          "features": [
+            -0.7876896278047478,
+            0.7510382508516695
+          ],
+          "choice": "rapid-adaptation",
+          "record_sha256": "8bd6988296a8b524b8d3f1cc2c57edf60c2d3308b2ed2993d964c3115f02e8b7",
+          "learned_mse": 0.0007160399214292403,
+          "genesis_selector_mse": 0.0007160399214292403,
+          "fixed_mse": 0.0007160399214292403,
+          "random_mse": 0.22213631983035403,
+          "uniform_random_expected_mse": 0.3004040045606037,
+          "exhaustive_oracle_mse": 0.0007160399214292403,
+          "regression_delta": 1.0862389182247367,
+          "supervised_updates": 42,
+          "parent_unchanged": true,
+          "restart_choice_equal": true
+        },
+        {
+          "task": "evaluation/noisy-source/2005",
+          "condition": "noisy-source",
+          "features": [
+            -0.1968893851892628,
+            -0.2011315876144934
+          ],
+          "choice": "rapid-adaptation",
+          "record_sha256": "03377ebb95ee16e3967e7e699d6fffb6a763c6db4548a7012f47670ee191194a",
+          "learned_mse": 0.01611819806065348,
+          "genesis_selector_mse": 0.0028192915369229248,
+          "fixed_mse": 0.01611819806065348,
+          "random_mse": 0.0003498396279216938,
+          "uniform_random_expected_mse": 0.006429109741832699,
+          "exhaustive_oracle_mse": 0.0003498396279216938,
+          "regression_delta": 0.023151226540937205,
+          "supervised_updates": 42,
+          "parent_unchanged": true,
+          "restart_choice_equal": true
+        }
+      ],
+      "experiment_reproduction_exact": true,
+      "archive_restore_exact": true,
+      "archive_sha256": "ea757669199cb7440b133648133a5000b008ea48dc4ec049be385ba10631ef19",
+      "adoption_state": "archive-only",
+      "automatic_adoption": false,
+      "limits": [
+        "Synthetic supervised scalar functions and three learning-rate operators only.",
+        "Held-out task instances, not unseen task families or UC/Windows validation.",
+        "Not open-ended invention, general intelligence, a latency benchmark, or automatic parent replacement.",
+        "Regressions remain separate; lower task error does not erase forgetting costs."
+      ],
+      "selector_genesis_sha256": "3d8fd5f68b28a38b57197a360a2f67cbc242d536e0a20884710ace211e2bd831",
+      "selector_after_sha256": "a74105c9c757d4ed0301af40a880214fdf2294cd175fb1ebc31cd46fec417841"
+    },
+    {
+      "schema": "axm.innovation-benchmark/v1",
+      "selector_seed": 43,
+      "environment": {
+        "python": "3.12.14",
+        "implementation": "CPython",
+        "platform": "Linux"
+      },
+      "training_tasks": 12,
+      "evaluation_tasks": 12,
+      "feature_names": [
+        "observed_target_roughness",
+        "parent_training_error"
+      ],
+      "operators": [
+        {
+          "name": "conservative",
+          "changes": {
+            "learning_rate": 0.003
+          },
+          "mechanism_id": "72bcbadcb5c46dc6afe0415dfdf1b31fc92732f7c186dcf5b471026eae731fa5"
+        },
+        {
+          "name": "ordinary",
+          "changes": {
+            "learning_rate": 0.03
+          },
+          "mechanism_id": "4bdaec6abe338f9e0725dc3e442b13daaa02bf014154f0dc8e9cdd4fcccbf8cc"
+        },
+        {
+          "name": "rapid-adaptation",
+          "changes": {
+            "learning_rate": 0.3
+          },
+          "mechanism_id": "94d7b4de890ecce8848604075f1124463d6899a1c3a682526aa668c3d78d07ac"
+        }
+      ],
+      "selector_training_objective": "validation MSE only",
+      "evaluation_metric": "held-out MSE",
+      "training_seed_range": [
+        300,
+        305
+      ],
+      "evaluation_seed_range": [
+        3000,
+        3005
+      ],
+      "metrics": {
+        "learned_mse": 0.0061127273718878,
+        "genesis_selector_mse": 0.0029881182623991056,
+        "fixed_mse": 0.05230560375014511,
+        "random_mse": 0.21738620567692193,
+        "uniform_random_expected_mse": 0.24780384662986835,
+        "exhaustive_oracle_mse": 0.0029881182623991056,
+        "beats_best_training_fixed": true,
+        "beats_random_expectation": true,
+        "beats_untrained_selector": false
+      },
+      "rows": [
+        {
+          "task": "evaluation/shift/3000",
+          "condition": "shift",
+          "features": [
+            -0.8143672140659594,
+            0.2548525590289664
+          ],
+          "choice": "rapid-adaptation",
+          "record_sha256": "e52b6898f7aeb76d8c9c81ea483e5261449c709a069e83d7a240df2322656c9d",
+          "learned_mse": 0.010371428675622348,
+          "genesis_selector_mse": 0.010371428675622348,
+          "fixed_mse": 0.010371428675622348,
+          "random_mse": 1.1793193405099418,
+          "uniform_random_expected_mse": 0.619191165178081,
+          "exhaustive_oracle_mse": 0.010371428675622348,
+          "regression_delta": 1.055542228813923,
+          "supervised_updates": 42,
+          "parent_unchanged": true,
+          "restart_choice_equal": true
+        },
+        {
+          "task": "evaluation/noisy-source/3000",
+          "condition": "noisy-source",
+          "features": [
+            0.6923879145328071,
+            -0.10295172757615145
+          ],
+          "choice": "conservative",
+          "record_sha256": "966fb6632e1de9b92c299c761032338977c0bc7fff97b0cb5e092690dffea731",
+          "learned_mse": 0.0005599827841873007,
+          "genesis_selector_mse": 0.0005599827841873007,
+          "fixed_mse": 0.1973244525241792,
+          "random_mse": 0.0054704779590197365,
+          "uniform_random_expected_mse": 0.06778497108912875,
+          "exhaustive_oracle_mse": 0.0005599827841873007,
+          "regression_delta": 0.0001077167804668384,
+          "supervised_updates": 42,
+          "parent_unchanged": true,
+          "restart_choice_equal": true
+        },
+        {
+          "task": "evaluation/shift/3001",
+          "condition": "shift",
+          "features": [
+            -0.8104655076425356,
+            0.22989185352503616
+          ],
+          "choice": "rapid-adaptation",
+          "record_sha256": "364a709f5432bdd265c2c043cb3ff72cea7bc9ac919146b147f7441192f10591",
+          "learned_mse": 0.0005274023775279052,
+          "genesis_selector_mse": 0.0005274023775279052,
+          "fixed_mse": 0.0005274023775279052,
+          "random_mse": 0.0005274023775279052,
+          "uniform_random_expected_mse": 0.2549085562838939,
+          "exhaustive_oracle_mse": 0.0005274023775279052,
+          "regression_delta": 0.8462851930165448,
+          "supervised_updates": 42,
+          "parent_unchanged": true,
+          "restart_choice_equal": true
+        },
+        {
+          "task": "evaluation/noisy-source/3001",
+          "condition": "noisy-source",
+          "features": [
+            0.5323929144708617,
+            -0.15639607884922352
+          ],
+          "choice": "conservative",
+          "record_sha256": "61148fe7bc1deeda70114a7ecf8a93603e19a594080e0723bb020a9a4a60bb8c",
+          "learned_mse": 0.0006848103970177871,
+          "genesis_selector_mse": 0.0006848103970177871,
+          "fixed_mse": 0.05092786019046576,
+          "random_mse": 0.0006848103970177871,
+          "uniform_random_expected_mse": 0.01874878174730193,
+          "exhaustive_oracle_mse": 0.0006848103970177871,
+          "regression_delta": 4.7352584115125046e-05,
+          "supervised_updates": 42,
+          "parent_unchanged": true,
+          "restart_choice_equal": true
+        },
+        {
+          "task": "evaluation/shift/3002",
+          "condition": "shift",
+          "features": [
+            -0.8409254309972778,
+            0.014316226396353882
+          ],
+          "choice": "rapid-adaptation",
+          "record_sha256": "93a1aefbbc8eb9016a09aa1808c4e60ff53d7de9c88d0b7976b704765db9a970",
+          "learned_mse": 0.014589949013218953,
+          "genesis_selector_mse": 0.014589949013218953,
+          "fixed_mse": 0.014589949013218953,
+          "random_mse": 0.439627032205912,
+          "uniform_random_expected_mse": 0.40577281029173884,
+          "exhaustive_oracle_mse": 0.014589949013218953,
+          "regression_delta": 0.5850451064060341,
+          "supervised_updates": 42,
+          "parent_unchanged": true,
+          "restart_choice_equal": true
+        },
+        {
+          "task": "evaluation/noisy-source/3002",
+          "condition": "noisy-source",
+          "features": [
+            0.2517990856136618,
+            -0.08898308018100709
+          ],
+          "choice": "ordinary",
+          "record_sha256": "457184bdf1a561451364661d6e0c33fa4a546671a83d8ade6eb8eba4e4c8dd29",
+          "learned_mse": 0.030174485099020123,
+          "genesis_selector_mse": 0.0006376928401426216,
+          "fixed_mse": 0.2358259875304147,
+          "random_mse": 0.030174485099020123,
+          "uniform_random_expected_mse": 0.08887938848985916,
+          "exhaustive_oracle_mse": 0.0006376928401426216,
+          "regression_delta": 0.029086023155667672,
+          "supervised_updates": 42,
+          "parent_unchanged": true,
+          "restart_choice_equal": true
+        },
+        {
+          "task": "evaluation/shift/3003",
+          "condition": "shift",
+          "features": [
+            -0.7818144859985336,
+            0.8101088362703917
+          ],
+          "choice": "rapid-adaptation",
+          "record_sha256": "12181a8e56380e20b49313131da265ec501c87f9bfe9204aa584ea7fe7840f5f",
+          "learned_mse": 0.000892738296775107,
+          "genesis_selector_mse": 0.000892738296775107,
+          "fixed_mse": 0.000892738296775107,
+          "random_mse": 0.000892738296775107,
+          "uniform_random_expected_mse": 0.3956170025163765,
+          "exhaustive_oracle_mse": 0.000892738296775107,
+          "regression_delta": 1.139675594826466,
+          "supervised_updates": 42,
+          "parent_unchanged": true,
+          "restart_choice_equal": true
+        },
+        {
+          "task": "evaluation/noisy-source/3003",
+          "condition": "noisy-source",
+          "features": [
+            0.6764755839282524,
+            -0.14645977231785706
+          ],
+          "choice": "conservative",
+          "record_sha256": "a7441faee03c647aeb2abd3d53b27a169bb8e90b889b0fa7ba8088278a41f538",
+          "learned_mse": 0.0009539115924097976,
+          "genesis_selector_mse": 0.0009539115924097976,
+          "fixed_mse": 0.08346461016332274,
+          "random_mse": 0.08346461016332274,
+          "uniform_random_expected_mse": 0.03095113258672573,
+          "exhaustive_oracle_mse": 0.0009539115924097976,
+          "regression_delta": 1.5472491565451637e-05,
+          "supervised_updates": 42,
+          "parent_unchanged": true,
+          "restart_choice_equal": true
+        },
+        {
+          "task": "evaluation/shift/3004",
+          "condition": "shift",
+          "features": [
+            -0.7927139273034738,
+            0.3539821913583122
+          ],
+          "choice": "rapid-adaptation",
+          "record_sha256": "497b8283e5d613f83e6eec9405e51e61564fc2c68d6b7586b8b90841d2e7dbc3",
+          "learned_mse": 0.0006598420639820687,
+          "genesis_selector_mse": 0.0006598420639820687,
+          "fixed_mse": 0.0006598420639820687,
+          "random_mse": 0.8545353929516337,
+          "uniform_random_expected_mse": 0.3678235308254787,
+          "exhaustive_oracle_mse": 0.0006598420639820687,
+          "regression_delta": 1.103899254052657,
+          "supervised_updates": 42,
+          "parent_unchanged": true,
+          "restart_choice_equal": true
+        },
+        {
+          "task": "evaluation/noisy-source/3004",
+          "condition": "noisy-source",
+          "features": [
+            0.23961016023334603,
+            -0.2466191758667543
+          ],
+          "choice": "ordinary",
+          "record_sha256": "2e8c107ea21469617d1d6964ea8aa65ba8b5bfb04cdbc0e4f5788f9fa1efe8b7",
+          "learned_mse": 0.003700121455293794,
+          "genesis_selector_mse": 0.0006992494768640251,
+          "fixed_mse": 0.01793956074454449,
+          "random_mse": 0.003700121455293794,
+          "uniform_random_expected_mse": 0.00744631055890077,
+          "exhaustive_oracle_mse": 0.0006992494768640251,
+          "regression_delta": 0.002112439985707944,
+          "supervised_updates": 42,
+          "parent_unchanged": true,
+          "restart_choice_equal": true
+        },
+        {
+          "task": "evaluation/shift/3005",
+          "condition": "shift",
+          "features": [
+            -0.8062723125638858,
+            0.400462587312969
+          ],
+          "choice": "rapid-adaptation",
+          "record_sha256": "6c2965ccb722bce2c85fc297661a57db13080b6adbf4677c4f57f1b3da467074",
+          "learned_mse": 0.004416694916437206,
+          "genesis_selector_mse": 0.004416694916437206,
+          "fixed_mse": 0.004416694916437206,
+          "random_mse": 0.004416694916437206,
+          "uniform_random_expected_mse": 0.7107185776539295,
+          "exhaustive_oracle_mse": 0.004416694916437206,
+          "regression_delta": 1.1794409043561767,
+          "supervised_updates": 42,
+          "parent_unchanged": true,
+          "restart_choice_equal": true
+        },
+        {
+          "task": "evaluation/noisy-source/3005",
+          "condition": "noisy-source",
+          "features": [
+            0.11409123628229012,
+            -0.30714140599023065
+          ],
+          "choice": "ordinary",
+          "record_sha256": "39347dc2c2596e103ac97ec92f74e92fde9266dc53969f009d9fce24d4305cd2",
+          "learned_mse": 0.005821361791161205,
+          "genesis_selector_mse": 0.0008637167146041461,
+          "fixed_mse": 0.010726718505250862,
+          "random_mse": 0.005821361791161205,
+          "uniform_random_expected_mse": 0.005803932337005404,
+          "exhaustive_oracle_mse": 0.0008637167146041461,
+          "regression_delta": 0.004414528890454673,
+          "supervised_updates": 42,
+          "parent_unchanged": true,
+          "restart_choice_equal": true
+        }
+      ],
+      "experiment_reproduction_exact": true,
+      "archive_restore_exact": true,
+      "archive_sha256": "e469a71bac2228e92872ca4c63ffc4b3cbf5a7ae7c183a713a3ddc78bef30f6c",
+      "adoption_state": "archive-only",
+      "automatic_adoption": false,
+      "limits": [
+        "Synthetic supervised scalar functions and three learning-rate operators only.",
+        "Held-out task instances, not unseen task families or UC/Windows validation.",
+        "Not open-ended invention, general intelligence, a latency benchmark, or automatic parent replacement.",
+        "Regressions remain separate; lower task error does not erase forgetting costs."
+      ],
+      "selector_genesis_sha256": "b69c9c158fe3ec9644798fa82cb5f4a76d0a577dbdf779326e3ee340e4b397cc",
+      "selector_after_sha256": "672ac827840dff852250c718aa2c9b87ca2f54f0073c714c26d4c92ffd770fcf"
+    }
+  ],
+  "mean_metrics": {
+    "learned_mse": 0.00798652882672959,
+    "genesis_selector_mse": 0.10652175279108522,
+    "fixed_mse": 0.035690092936120806,
+    "random_mse": 0.12767746217346457,
+    "uniform_random_expected_mse": 0.23459775962501708,
+    "exhaustive_oracle_mse": 0.0034207286911263376
+  },
+  "held_out_task_instances": 36,
+  "all_archives_restore": true,
+  "all_experiments_reproduce": true,
+  "all_parent_states_preserved": true,
+  "all_choices_retained": true,
+  "scope": "Three synthetic numeric cohorts, two known laboratory conditions, three learning-rate operators; no UC or unseen-domain claim."
+}
