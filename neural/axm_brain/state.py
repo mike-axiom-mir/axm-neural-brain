@@ -10,7 +10,18 @@ class BrainSnapshotError(ValueError):
 
 
 def _canonical_bytes(body: dict) -> bytes:
-    return json.dumps(body, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode("utf-8")
+    try:
+        return json.dumps(
+            body,
+            sort_keys=True,
+            separators=(",", ":"),
+            ensure_ascii=False,
+            allow_nan=False,
+        ).encode("utf-8")
+    except (TypeError, ValueError) as exc:
+        raise BrainSnapshotError(
+            "brain snapshot must contain strict finite JSON values"
+        ) from exc
 
 
 def snapshot_payload(body: dict) -> dict:
