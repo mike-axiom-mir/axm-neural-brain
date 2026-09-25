@@ -12,7 +12,7 @@ from .taxonomy import ROOT_DIRECTIONS, normalize_directions
 def _finite_float(value, name: str) -> float:
     try:
         number = float(value)
-    except (TypeError, ValueError) as exc:
+    except (TypeError, ValueError, OverflowError) as exc:
         raise ValueError(f"{name} must be a finite number") from exc
     if not isfinite(number):
         raise ValueError(f"{name} must be finite")
@@ -58,6 +58,10 @@ class BrainConfig:
     weight_limit: float = 3.0
 
     def validate(self) -> None:
+        for name in ("input_size", "hidden_size", "output_size", "seed",
+                     "replay_capacity", "sleep_replay_passes"):
+            if type(getattr(self, name)) is not int:
+                raise ValueError(f"{name} must be an integer")
         for name in ("input_size", "hidden_size", "output_size"):
             if getattr(self, name) <= 0:
                 raise ValueError(f"{name} must be > 0")
@@ -358,6 +362,10 @@ class AXMBrain:
         normalized = Experience.from_dict(
             event.to_dict()
         )
+        # Reject malformed events before changing recurrent state or evidence.
+        self._validate_vector(normalized.observation, self.config.input_size, "observation")
+        if normalized.target is not None:
+            self._validate_vector(normalized.target, self.config.output_size, "target")
         self.host_experience_count += 1
         if normalized.directions:
             for direction in (
@@ -777,118 +785,74 @@ class AXMBrain:
                 "contract mismatch"
             )
 
-        brain = cls(
-            BrainConfig(
-                **body["config"]
-            )
-        )
-        state = body["state"]
-        brain.rng.state = int(
-            state["rng_state"]
-        )
-        for name in (
-            "w_in",
-            "w_rec",
-            "w_out",
-            "trace_in",
-            "trace_rec",
-            "trace_out",
-        ):
-            setattr(
-                brain,
-                name,
-                [
-                    [
-                        _finite_float(v, name)
-                        for v in row
-                    ]
-                    for row
-                    in state[name]
-                ],
-            )
-        for name in (
-            "b_hidden",
-            "b_out",
-            "hidden",
-            "last_output",
-        ):
-            setattr(
-                brain,
-                name,
-                [
-                    _finite_float(v, name)
-                    for v
-                    in state[name]
-                ],
-            )
-        brain.reward_baseline = _finite_float(
-            state["reward_baseline"],
-            "reward_baseline",
-        )
-        brain.replay = [
-            Experience.from_dict(x)
-            for x in state["replay"]
-        ]
-        brain.mode = str(
-            state["mode"]
-        )
-        brain.cycle = int(
-            state["cycle"]
-        )
-        brain.steps = int(
-            state["steps"]
-        )
-        brain.sleep_count = int(
-            state["sleep_count"]
-        )
-        brain.host_experience_count = int(
-            state.get(
-                "host_experience_count",
-                0,
-            )
-        )
-        brain.supervised_update_count = int(
-            state.get(
-                "supervised_update_count",
-                0,
-            )
-        )
-        brain.reward_update_count = int(
-            state.get(
-                "reward_update_count",
-                0,
-            )
-        )
-        brain.sleep_replay_event_count = int(
-            state.get(
-                "sleep_replay_event_count",
-                0,
-            )
-        )
-        brain.total_pruned_weights = int(
-            state.get(
-                "total_pruned_weights",
-                0,
-            )
-        )
-        persisted_counts = state.get(
-            "direction_experience_counts",
-            {},
-        )
-        brain.direction_experience_counts = {
-            direction: int(
-                persisted_counts.get(
-                    direction,
-                    0,
-                )
-            )
-            for direction
-            in ROOT_DIRECTIONS
+        config = body.get("config")
+        state = body.get("state")
+        if not isinstance(config, dict) or not isinstance(state, dict):
+            raise ValueError("brain snapshot requires config and state objects")
+        try:
+            cfg = BrainConfig(**config)
+        except TypeError as exc:
+            raise ValueError("invalid brain snapshot configuration") from exc
+        brain = cls(cfg)
+
+        def integer(name, value, minimum=0, maximum=None):
+            if (type(value) is not int or value < minimum
+                    or (maximum is not None and value > maximum)):
+                raise ValueError(f"{name} must be an integer in its valid range")
+            return value
+
+        def vector(name, values, size):
+            if not isinstance(values, list):
+                raise ValueError(f"{name} must be a list")
+            return cls._validate_vector(values, size, name)
+
+        brain.rng.state = integer("rng_state", state.get("rng_state"), 1, XorShift64.MASK)
+        shapes = {
+            "w_in": (cfg.hidden_size, cfg.input_size),
+            "w_rec": (cfg.hidden_size, cfg.hidden_size),
+            "w_out": (cfg.output_size, cfg.hidden_size),
+            "trace_in": (cfg.hidden_size, cfg.input_size),
+            "trace_rec": (cfg.hidden_size, cfg.hidden_size),
+            "trace_out": (cfg.output_size, cfg.hidden_size),
         }
-        brain.untagged_experience_count = int(
-            state.get(
-                "untagged_experience_count",
-                0,
-            )
-        )
+        for name, (rows, columns) in shapes.items():
+            matrix = state.get(name)
+            if not isinstance(matrix, list) or len(matrix) != rows:
+                raise ValueError(f"{name} must have {rows} rows")
+            setattr(brain, name, [vector(name, row, columns) for row in matrix])
+        for name, size in (("b_hidden", cfg.hidden_size), ("hidden", cfg.hidden_size),
+                           ("b_out", cfg.output_size), ("last_output", cfg.output_size)):
+            setattr(brain, name, vector(name, state.get(name), size))
+        brain.reward_baseline = _finite_float(state.get("reward_baseline"), "reward_baseline")
+
+        replay = state.get("replay")
+        if not isinstance(replay, list) or len(replay) > cfg.replay_capacity:
+            raise ValueError("replay must be a list within configured capacity")
+        for item in replay:
+            if not isinstance(item, dict) or not isinstance(item.get("observation"), list):
+                raise ValueError("invalid replay experience")
+            if item.get("target") is not None and not isinstance(item["target"], list):
+                raise ValueError("invalid replay target")
+            event = Experience.from_dict(item)
+            vector("replay observation", event.observation, cfg.input_size)
+            if event.target is not None:
+                vector("replay target", event.target, cfg.output_size)
+            brain.replay.append(event)
+
+        if state.get("mode") not in ("wake", "sleep"):
+            raise ValueError("brain mode must be wake or sleep")
+        brain.mode = state["mode"]
+        for name in ("cycle", "steps", "sleep_count"):
+            setattr(brain, name, integer(name, state.get(name)))
+        # Older v0.2 snapshots may omit these evidence counters.
+        for name in ("host_experience_count", "supervised_update_count", "reward_update_count",
+                     "sleep_replay_event_count", "total_pruned_weights", "untagged_experience_count"):
+            setattr(brain, name, integer(name, state.get(name, 0)))
+        counts = state.get("direction_experience_counts", {})
+        if not isinstance(counts, dict) or set(counts) - set(ROOT_DIRECTIONS):
+            raise ValueError("invalid direction experience counts")
+        brain.direction_experience_counts = {
+            direction: integer(direction, counts.get(direction, 0))
+            for direction in ROOT_DIRECTIONS
+        }
         return brain

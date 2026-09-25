@@ -1,0 +1,383 @@
+======================================================================
+ERROR: test_integer_config_fields_are_not_coerced (neural.axm_brain.tests.test_state_integrity.StateIntegrityTests.test_integer_config_fields_are_not_coerced) (name='input_size', value='2')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/7356affac651/axm-neural-brain/neural/axm_brain/tests/test_state_integrity.py", line 61, in test_integer_config_fields_are_not_coerced
+    BrainConfig(**kwargs).validate()
+  File "/workspace/scratch/7356affac651/axm-neural-brain/neural/axm_brain/core.py", line 62, in validate
+    if getattr(self, name) <= 0:
+       ^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: '<=' not supported between instances of 'str' and 'int'
+
+======================================================================
+ERROR: test_integer_config_fields_are_not_coerced (neural.axm_brain.tests.test_state_integrity.StateIntegrityTests.test_integer_config_fields_are_not_coerced) (name='hidden_size', value='2')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/7356affac651/axm-neural-brain/neural/axm_brain/tests/test_state_integrity.py", line 61, in test_integer_config_fields_are_not_coerced
+    BrainConfig(**kwargs).validate()
+  File "/workspace/scratch/7356affac651/axm-neural-brain/neural/axm_brain/core.py", line 62, in validate
+    if getattr(self, name) <= 0:
+       ^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: '<=' not supported between instances of 'str' and 'int'
+
+======================================================================
+ERROR: test_integer_config_fields_are_not_coerced (neural.axm_brain.tests.test_state_integrity.StateIntegrityTests.test_integer_config_fields_are_not_coerced) (name='output_size', value='2')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/7356affac651/axm-neural-brain/neural/axm_brain/tests/test_state_integrity.py", line 61, in test_integer_config_fields_are_not_coerced
+    BrainConfig(**kwargs).validate()
+  File "/workspace/scratch/7356affac651/axm-neural-brain/neural/axm_brain/core.py", line 62, in validate
+    if getattr(self, name) <= 0:
+       ^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: '<=' not supported between instances of 'str' and 'int'
+
+======================================================================
+ERROR: test_integer_config_fields_are_not_coerced (neural.axm_brain.tests.test_state_integrity.StateIntegrityTests.test_integer_config_fields_are_not_coerced) (name='replay_capacity', value='2')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/7356affac651/axm-neural-brain/neural/axm_brain/tests/test_state_integrity.py", line 61, in test_integer_config_fields_are_not_coerced
+    BrainConfig(**kwargs).validate()
+  File "/workspace/scratch/7356affac651/axm-neural-brain/neural/axm_brain/core.py", line 88, in validate
+    if self.replay_capacity < 0:
+       ^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: '<' not supported between instances of 'str' and 'int'
+
+======================================================================
+ERROR: test_integer_config_fields_are_not_coerced (neural.axm_brain.tests.test_state_integrity.StateIntegrityTests.test_integer_config_fields_are_not_coerced) (name='sleep_replay_passes', value='2')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/7356affac651/axm-neural-brain/neural/axm_brain/tests/test_state_integrity.py", line 61, in test_integer_config_fields_are_not_coerced
+    BrainConfig(**kwargs).validate()
+  File "/workspace/scratch/7356affac651/axm-neural-brain/neural/axm_brain/core.py", line 90, in validate
+    if self.sleep_replay_passes < 0:
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: '<' not supported between instances of 'str' and 'int'
+
+======================================================================
+FAIL: test_integer_config_fields_are_not_coerced (neural.axm_brain.tests.test_state_integrity.StateIntegrityTests.test_integer_config_fields_are_not_coerced) (name='input_size', value=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/7356affac651/axm-neural-brain/neural/axm_brain/tests/test_state_integrity.py", line 60, in test_integer_config_fields_are_not_coerced
+    with self.assertRaises(ValueError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_integer_config_fields_are_not_coerced (neural.axm_brain.tests.test_state_integrity.StateIntegrityTests.test_integer_config_fields_are_not_coerced) (name='input_size', value=1.5)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/7356affac651/axm-neural-brain/neural/axm_brain/tests/test_state_integrity.py", line 60, in test_integer_config_fields_are_not_coerced
+    with self.assertRaises(ValueError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_integer_config_fields_are_not_coerced (neural.axm_brain.tests.test_state_integrity.StateIntegrityTests.test_integer_config_fields_are_not_coerced) (name='hidden_size', value=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/7356affac651/axm-neural-brain/neural/axm_brain/tests/test_state_integrity.py", line 60, in test_integer_config_fields_are_not_coerced
+    with self.assertRaises(ValueError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_integer_config_fields_are_not_coerced (neural.axm_brain.tests.test_state_integrity.StateIntegrityTests.test_integer_config_fields_are_not_coerced) (name='hidden_size', value=1.5)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/7356affac651/axm-neural-brain/neural/axm_brain/tests/test_state_integrity.py", line 60, in test_integer_config_fields_are_not_coerced
+    with self.assertRaises(ValueError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_integer_config_fields_are_not_coerced (neural.axm_brain.tests.test_state_integrity.StateIntegrityTests.test_integer_config_fields_are_not_coerced) (name='output_size', value=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/7356affac651/axm-neural-brain/neural/axm_brain/tests/test_state_integrity.py", line 60, in test_integer_config_fields_are_not_coerced
+    with self.assertRaises(ValueError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_integer_config_fields_are_not_coerced (neural.axm_brain.tests.test_state_integrity.StateIntegrityTests.test_integer_config_fields_are_not_coerced) (name='output_size', value=1.5)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/7356affac651/axm-neural-brain/neural/axm_brain/tests/test_state_integrity.py", line 60, in test_integer_config_fields_are_not_coerced
+    with self.assertRaises(ValueError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_integer_config_fields_are_not_coerced (neural.axm_brain.tests.test_state_integrity.StateIntegrityTests.test_integer_config_fields_are_not_coerced) (name='seed', value=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/7356affac651/axm-neural-brain/neural/axm_brain/tests/test_state_integrity.py", line 60, in test_integer_config_fields_are_not_coerced
+    with self.assertRaises(ValueError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_integer_config_fields_are_not_coerced (neural.axm_brain.tests.test_state_integrity.StateIntegrityTests.test_integer_config_fields_are_not_coerced) (name='seed', value=1.5)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/7356affac651/axm-neural-brain/neural/axm_brain/tests/test_state_integrity.py", line 60, in test_integer_config_fields_are_not_coerced
+    with self.assertRaises(ValueError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_integer_config_fields_are_not_coerced (neural.axm_brain.tests.test_state_integrity.StateIntegrityTests.test_integer_config_fields_are_not_coerced) (name='seed', value='2')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/7356affac651/axm-neural-brain/neural/axm_brain/tests/test_state_integrity.py", line 60, in test_integer_config_fields_are_not_coerced
+    with self.assertRaises(ValueError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_integer_config_fields_are_not_coerced (neural.axm_brain.tests.test_state_integrity.StateIntegrityTests.test_integer_config_fields_are_not_coerced) (name='replay_capacity', value=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/7356affac651/axm-neural-brain/neural/axm_brain/tests/test_state_integrity.py", line 60, in test_integer_config_fields_are_not_coerced
+    with self.assertRaises(ValueError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_integer_config_fields_are_not_coerced (neural.axm_brain.tests.test_state_integrity.StateIntegrityTests.test_integer_config_fields_are_not_coerced) (name='replay_capacity', value=1.5)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/7356affac651/axm-neural-brain/neural/axm_brain/tests/test_state_integrity.py", line 60, in test_integer_config_fields_are_not_coerced
+    with self.assertRaises(ValueError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_integer_config_fields_are_not_coerced (neural.axm_brain.tests.test_state_integrity.StateIntegrityTests.test_integer_config_fields_are_not_coerced) (name='sleep_replay_passes', value=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/7356affac651/axm-neural-brain/neural/axm_brain/tests/test_state_integrity.py", line 60, in test_integer_config_fields_are_not_coerced
+    with self.assertRaises(ValueError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_integer_config_fields_are_not_coerced (neural.axm_brain.tests.test_state_integrity.StateIntegrityTests.test_integer_config_fields_are_not_coerced) (name='sleep_replay_passes', value=1.5)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/7356affac651/axm-neural-brain/neural/axm_brain/tests/test_state_integrity.py", line 60, in test_integer_config_fields_are_not_coerced
+    with self.assertRaises(ValueError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_rejected_dimensions_leave_complete_state_unchanged (neural.axm_brain.tests.test_state_integrity.StateIntegrityTests.test_rejected_dimensions_leave_complete_state_unchanged) (event=Experience(observation=[1.0], target=None, reward=None, source='host', tag='', directions=()))
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/7356affac651/axm-neural-brain/neural/axm_brain/tests/test_state_integrity.py", line 19, in test_rejected_dimensions_leave_complete_state_unchanged
+    self.assertEqual(brain.to_snapshot(), before)
+AssertionError: {'bod[2237 chars]nt': 1, 'supervised_update_count': 0, 'reward_[276 chars]7e0'} != {'bod[2237 chars]nt': 0, 'supervised_update_count': 0, 'reward_[276 chars]91e'}
+Diff is 7025 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_rejected_dimensions_leave_complete_state_unchanged (neural.axm_brain.tests.test_state_integrity.StateIntegrityTests.test_rejected_dimensions_leave_complete_state_unchanged) (event=Experience(observation=[1.0, 0.0], target=[1.0], reward=None, source='host', tag='', directions=()))
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/7356affac651/axm-neural-brain/neural/axm_brain/tests/test_state_integrity.py", line 19, in test_rejected_dimensions_leave_complete_state_unchanged
+    self.assertEqual(brain.to_snapshot(), before)
+AssertionError: {'bod[1908 chars]n': [-0.608859364126299, -0.4469611415991247, [835 chars]5f5'} != {'bod[1908 chars]n': [0.0, 0.0, 0.0], 'last_output': [0.0, 0.0][605 chars]91e'}
+Diff is 7996 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_restore_rejects_invalid_modes_counters_rng_and_replay (neural.axm_brain.tests.test_state_integrity.StateIntegrityTests.test_restore_rejects_invalid_modes_counters_rng_and_replay) (name='mode', value='dream')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/7356affac651/axm-neural-brain/neural/axm_brain/tests/test_state_integrity.py", line 50, in test_restore_rejects_invalid_modes_counters_rng_and_replay
+    with self.assertRaises(ValueError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_restore_rejects_invalid_modes_counters_rng_and_replay (neural.axm_brain.tests.test_state_integrity.StateIntegrityTests.test_restore_rejects_invalid_modes_counters_rng_and_replay) (name='steps', value=-1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/7356affac651/axm-neural-brain/neural/axm_brain/tests/test_state_integrity.py", line 50, in test_restore_rejects_invalid_modes_counters_rng_and_replay
+    with self.assertRaises(ValueError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_restore_rejects_invalid_modes_counters_rng_and_replay (neural.axm_brain.tests.test_state_integrity.StateIntegrityTests.test_restore_rejects_invalid_modes_counters_rng_and_replay) (name='steps', value=1.5)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/7356affac651/axm-neural-brain/neural/axm_brain/tests/test_state_integrity.py", line 50, in test_restore_rejects_invalid_modes_counters_rng_and_replay
+    with self.assertRaises(ValueError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_restore_rejects_invalid_modes_counters_rng_and_replay (neural.axm_brain.tests.test_state_integrity.StateIntegrityTests.test_restore_rejects_invalid_modes_counters_rng_and_replay) (name='cycle', value=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/7356affac651/axm-neural-brain/neural/axm_brain/tests/test_state_integrity.py", line 50, in test_restore_rejects_invalid_modes_counters_rng_and_replay
+    with self.assertRaises(ValueError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_restore_rejects_invalid_modes_counters_rng_and_replay (neural.axm_brain.tests.test_state_integrity.StateIntegrityTests.test_restore_rejects_invalid_modes_counters_rng_and_replay) (name='rng_state', value=0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/7356affac651/axm-neural-brain/neural/axm_brain/tests/test_state_integrity.py", line 50, in test_restore_rejects_invalid_modes_counters_rng_and_replay
+    with self.assertRaises(ValueError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_restore_rejects_invalid_modes_counters_rng_and_replay (neural.axm_brain.tests.test_state_integrity.StateIntegrityTests.test_restore_rejects_invalid_modes_counters_rng_and_replay) (name='rng_state', value=18446744073709551616)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/7356affac651/axm-neural-brain/neural/axm_brain/tests/test_state_integrity.py", line 50, in test_restore_rejects_invalid_modes_counters_rng_and_replay
+    with self.assertRaises(ValueError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_restore_rejects_invalid_modes_counters_rng_and_replay (neural.axm_brain.tests.test_state_integrity.StateIntegrityTests.test_restore_rejects_invalid_modes_counters_rng_and_replay) (name='direction_experience_counts', value={'CREATE': -1})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/7356affac651/axm-neural-brain/neural/axm_brain/tests/test_state_integrity.py", line 50, in test_restore_rejects_invalid_modes_counters_rng_and_replay
+    with self.assertRaises(ValueError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_restore_rejects_invalid_modes_counters_rng_and_replay (neural.axm_brain.tests.test_state_integrity.StateIntegrityTests.test_restore_rejects_invalid_modes_counters_rng_and_replay) (name='replay', value=[{'observation': [0.0], 'target': None, 'reward': None, 'source': 'host', 'tag': '', 'directions': []}])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/7356affac651/axm-neural-brain/neural/axm_brain/tests/test_state_integrity.py", line 50, in test_restore_rejects_invalid_modes_counters_rng_and_replay
+    with self.assertRaises(ValueError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_restore_rejects_invalid_modes_counters_rng_and_replay (neural.axm_brain.tests.test_state_integrity.StateIntegrityTests.test_restore_rejects_invalid_modes_counters_rng_and_replay) (name='replay', value=[{'observation': [0.0, 0.0], 'target': [1.0], 'reward': None, 'source': 'host', 'tag': '', 'directions': []}])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/7356affac651/axm-neural-brain/neural/axm_brain/tests/test_state_integrity.py", line 50, in test_restore_rejects_invalid_modes_counters_rng_and_replay
+    with self.assertRaises(ValueError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_restore_rejects_invalid_modes_counters_rng_and_replay (neural.axm_brain.tests.test_state_integrity.StateIntegrityTests.test_restore_rejects_invalid_modes_counters_rng_and_replay) (name='replay', value=[{'observation': [0.0, 0.0], 'target': None, 'reward': None, 'source': 'host', 'tag': '', 'directions': []}, {'observation': [0.0, 0.0], 'target': None, 'reward': None, 'source': 'host', 'tag': '', 'directions': []}, {'observation': [0.0, 0.0], 'target': None, 'reward': None, 'source': 'host', 'tag': '', 'directions': []}])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/7356affac651/axm-neural-brain/neural/axm_brain/tests/test_state_integrity.py", line 50, in test_restore_rejects_invalid_modes_counters_rng_and_replay
+    with self.assertRaises(ValueError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_restore_rejects_rehashed_wrong_tensor_dimensions (neural.axm_brain.tests.test_state_integrity.StateIntegrityTests.test_restore_rejects_rehashed_wrong_tensor_dimensions) (name='w_in')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/7356affac651/axm-neural-brain/neural/axm_brain/tests/test_state_integrity.py", line 28, in test_restore_rejects_rehashed_wrong_tensor_dimensions
+    with self.assertRaises(ValueError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_restore_rejects_rehashed_wrong_tensor_dimensions (neural.axm_brain.tests.test_state_integrity.StateIntegrityTests.test_restore_rejects_rehashed_wrong_tensor_dimensions) (name='w_rec')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/7356affac651/axm-neural-brain/neural/axm_brain/tests/test_state_integrity.py", line 28, in test_restore_rejects_rehashed_wrong_tensor_dimensions
+    with self.assertRaises(ValueError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_restore_rejects_rehashed_wrong_tensor_dimensions (neural.axm_brain.tests.test_state_integrity.StateIntegrityTests.test_restore_rejects_rehashed_wrong_tensor_dimensions) (name='w_out')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/7356affac651/axm-neural-brain/neural/axm_brain/tests/test_state_integrity.py", line 28, in test_restore_rejects_rehashed_wrong_tensor_dimensions
+    with self.assertRaises(ValueError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_restore_rejects_rehashed_wrong_tensor_dimensions (neural.axm_brain.tests.test_state_integrity.StateIntegrityTests.test_restore_rejects_rehashed_wrong_tensor_dimensions) (name='trace_in')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/7356affac651/axm-neural-brain/neural/axm_brain/tests/test_state_integrity.py", line 28, in test_restore_rejects_rehashed_wrong_tensor_dimensions
+    with self.assertRaises(ValueError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_restore_rejects_rehashed_wrong_tensor_dimensions (neural.axm_brain.tests.test_state_integrity.StateIntegrityTests.test_restore_rejects_rehashed_wrong_tensor_dimensions) (name='trace_rec')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/7356affac651/axm-neural-brain/neural/axm_brain/tests/test_state_integrity.py", line 28, in test_restore_rejects_rehashed_wrong_tensor_dimensions
+    with self.assertRaises(ValueError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_restore_rejects_rehashed_wrong_tensor_dimensions (neural.axm_brain.tests.test_state_integrity.StateIntegrityTests.test_restore_rejects_rehashed_wrong_tensor_dimensions) (name='trace_out')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/7356affac651/axm-neural-brain/neural/axm_brain/tests/test_state_integrity.py", line 28, in test_restore_rejects_rehashed_wrong_tensor_dimensions
+    with self.assertRaises(ValueError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_restore_rejects_rehashed_wrong_tensor_dimensions (neural.axm_brain.tests.test_state_integrity.StateIntegrityTests.test_restore_rejects_rehashed_wrong_tensor_dimensions) (name='hidden')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/7356affac651/axm-neural-brain/neural/axm_brain/tests/test_state_integrity.py", line 28, in test_restore_rejects_rehashed_wrong_tensor_dimensions
+    with self.assertRaises(ValueError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_restore_rejects_rehashed_wrong_tensor_dimensions (neural.axm_brain.tests.test_state_integrity.StateIntegrityTests.test_restore_rejects_rehashed_wrong_tensor_dimensions) (name='last_output')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/7356affac651/axm-neural-brain/neural/axm_brain/tests/test_state_integrity.py", line 28, in test_restore_rejects_rehashed_wrong_tensor_dimensions
+    with self.assertRaises(ValueError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_restore_rejects_rehashed_wrong_tensor_dimensions (neural.axm_brain.tests.test_state_integrity.StateIntegrityTests.test_restore_rejects_rehashed_wrong_tensor_dimensions) (name='b_hidden')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/7356affac651/axm-neural-brain/neural/axm_brain/tests/test_state_integrity.py", line 28, in test_restore_rejects_rehashed_wrong_tensor_dimensions
+    with self.assertRaises(ValueError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_restore_rejects_rehashed_wrong_tensor_dimensions (neural.axm_brain.tests.test_state_integrity.StateIntegrityTests.test_restore_rejects_rehashed_wrong_tensor_dimensions) (name='b_out')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/7356affac651/axm-neural-brain/neural/axm_brain/tests/test_state_integrity.py", line 28, in test_restore_rejects_rehashed_wrong_tensor_dimensions
+    with self.assertRaises(ValueError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_restore_rejects_rehashed_wrong_tensor_dimensions (neural.axm_brain.tests.test_state_integrity.StateIntegrityTests.test_restore_rejects_rehashed_wrong_tensor_dimensions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/7356affac651/axm-neural-brain/neural/axm_brain/tests/test_state_integrity.py", line 32, in test_restore_rejects_rehashed_wrong_tensor_dimensions
+    with self.assertRaises(ValueError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.039s
+
+FAILED (failures=36, errors=5)

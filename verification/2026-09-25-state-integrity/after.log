@@ -1,0 +1,38 @@
+test_bound_brain_carries_direction_metadata (test_analyzer.AnalyzerTests.test_bound_brain_carries_direction_metadata) ... ok
+test_capture_reports_mechanical_growth_state (test_analyzer.AnalyzerTests.test_capture_reports_mechanical_growth_state) ... ok
+test_compare_sees_learning_delta (test_analyzer.AnalyzerTests.test_compare_sees_learning_delta) ... ok
+test_invalid_root_direction_is_rejected (test_analyzer.AnalyzerTests.test_invalid_root_direction_is_rejected) ... ok
+test_sleep_delta_can_be_separated (test_analyzer.AnalyzerTests.test_sleep_delta_can_be_separated) ... ok
+test_direct_teaching_changes_response (test_brain.AXMBrainTests.test_direct_teaching_changes_response) ... ok
+test_replay_is_bounded (test_brain.AXMBrainTests.test_replay_is_bounded) ... ok
+test_reward_learning_changes_weights (test_brain.AXMBrainTests.test_reward_learning_changes_weights) ... ok
+test_same_seed_same_birth (test_brain.AXMBrainTests.test_same_seed_same_birth) ... ok
+test_sleep_replays_memory (test_brain.AXMBrainTests.test_sleep_replays_memory) ... ok
+test_snapshot_roundtrip (test_brain.AXMBrainTests.test_snapshot_roundtrip) ... ok
+test_tamper_rejected (test_brain.AXMBrainTests.test_tamper_rejected) ... ok
+test_wake_resets_transient_recurrent_state (test_brain.AXMBrainTests.test_wake_resets_transient_recurrent_state) ... ok
+test_contract_is_persisted_with_brain (test_contract.ContractTests.test_contract_is_persisted_with_brain) ... ok
+test_named_state_encodes_in_stable_order (test_contract.ContractTests.test_named_state_encodes_in_stable_order) ... ok
+test_tampered_contract_is_rejected (test_contract.ContractTests.test_tampered_contract_is_rejected) ... ok
+test_unknown_state_is_rejected (test_contract.ContractTests.test_unknown_state_is_rejected) ... ok
+test_deterministic_birth_survives_dedicated_extraction (test_extraction_boundaries.ExtractionBoundaryTests.test_deterministic_birth_survives_dedicated_extraction) ... ok
+test_donor_provenance_distinguishes_exact_copies_from_adaptations (test_extraction_boundaries.ExtractionBoundaryTests.test_donor_provenance_distinguishes_exact_copies_from_adaptations) ... ok
+test_runtime_core_has_no_ambient_authority_imports (test_extraction_boundaries.ExtractionBoundaryTests.test_runtime_core_has_no_ambient_authority_imports) ... ok
+test_channel_definition_rejects_nonfinite_bounds (test_finite_boundary.FiniteBoundaryTests.test_channel_definition_rejects_nonfinite_bounds) ... ok
+test_channel_rejects_nonfinite_and_out_of_range_input (test_finite_boundary.FiniteBoundaryTests.test_channel_rejects_nonfinite_and_out_of_range_input) ... ok
+test_config_rejects_nonfinite_training_values (test_finite_boundary.FiniteBoundaryTests.test_config_rejects_nonfinite_training_values) ... ok
+test_contract_decode_rejects_nonfinite_output (test_finite_boundary.FiniteBoundaryTests.test_contract_decode_rejects_nonfinite_output) ... ok
+test_experience_rejects_nonfinite_target_and_reward (test_finite_boundary.FiniteBoundaryTests.test_experience_rejects_nonfinite_target_and_reward) ... ok
+test_predict_rejects_nonfinite_observation (test_finite_boundary.FiniteBoundaryTests.test_predict_rejects_nonfinite_observation) ... ok
+test_restore_rejects_forged_nonfinite_snapshot (test_finite_boundary.FiniteBoundaryTests.test_restore_rejects_forged_nonfinite_snapshot) ... ok
+test_snapshot_creation_rejects_nonfinite_internal_state (test_finite_boundary.FiniteBoundaryTests.test_snapshot_creation_rejects_nonfinite_internal_state) ... ok
+test_integer_config_fields_are_not_coerced (test_state_integrity.StateIntegrityTests.test_integer_config_fields_are_not_coerced) ... ok
+test_rejected_dimensions_leave_complete_state_unchanged (test_state_integrity.StateIntegrityTests.test_rejected_dimensions_leave_complete_state_unchanged) ... ok
+test_restore_rejects_invalid_modes_counters_rng_and_replay (test_state_integrity.StateIntegrityTests.test_restore_rejects_invalid_modes_counters_rng_and_replay) ... ok
+test_restore_rejects_rehashed_wrong_tensor_dimensions (test_state_integrity.StateIntegrityTests.test_restore_rejects_rehashed_wrong_tensor_dimensions) ... ok
+test_restored_learning_sleep_and_wake_continue_exactly (test_state_integrity.StateIntegrityTests.test_restored_learning_sleep_and_wake_continue_exactly) ... ok
+
+----------------------------------------------------------------------
+Ran 33 tests in 0.064s
+
+OK

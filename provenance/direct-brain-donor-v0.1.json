@@ -23,7 +23,8 @@
     "neural/axm_brain/core.py": "hardened finite numeric boundary; donor blob preserved in adapted_from_donor",
     "neural/axm_brain/contract.py": "hardened host numeric boundary; donor blob preserved in adapted_from_donor",
     "neural/axm_brain/state.py": "strict finite JSON snapshot canonicalization; donor blob preserved in adapted_from_donor",
-    "neural/axm_brain/tests/test_finite_boundary.py": "bounded executable evidence for finite-value rejection"
+    "neural/axm_brain/tests/test_finite_boundary.py": "bounded executable evidence for finite-value rejection",
+    "neural/axm_brain/tests/test_state_integrity.py": "state-integrity regressions and exact post-restore learning/sleep continuation"
   },
   "authority_boundary": {
     "network": false,
@@ -42,8 +43,8 @@
   "adapted_from_donor": {
     "neural/axm_brain/core.py": {
       "donor_blob_sha": "b08f3beefd08704c46eaf349c9b5b83bafdbec42",
-      "current_blob_sha": "c5b31a5d49be2e539c78a5e3894b2ddce83445c8",
-      "reason": "finite-value validation for observations, targets, rewards, configuration, and restored neural state"
+      "current_blob_sha": "599d651c9a53a7252e9f87fd9298d4a5eefc14fd",
+      "reason": "finite-value validation for observations, targets, rewards, configuration, and restored neural state; validate dimensions before experience mutation and validate restored shapes, replay capacity, integer counters and mode"
     },
     "neural/axm_brain/contract.py": {
       "donor_blob_sha": "9677511ab423f4bca4770e3d5b47c5ece2829ea3",
